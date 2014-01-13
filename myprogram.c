@@ -1,21 +1,22 @@
 #include <stdio.h>
+#include "FUNC.H"
  
 int main()
 {
-   int first, second, add, subtract, multiply;
+   int first, second, addResult, subtractResult, multiplyResult;
    float divide;
  
    printf("Enter two integers\n");
    scanf("%d%d", &first, &second);
  
-   add        = first + second;
-   subtract = first - second;
-   multiply = first * second;
+   addResult        = add(first, second);
+   subtractResult = subtract(first, second);
+   multiplyResult = multiply(first, second);
    divide     = first / (float)second;   //typecasting
  
-   printf("Sum = %d\n",add);
-   printf("Difference = %d\n",subtract);
-   printf("Multiplication = %d\n",multiply);
+   printf("Sum = %d\n",addResult);
+   printf("Difference = %d\n",subtractResult);
+   printf("Multiplication = %d\n",multiplyResult);
    printf("Division = %.2f\n",divide);
  
    return 0;
