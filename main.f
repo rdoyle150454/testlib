@@ -1,5 +1,5 @@
        program MAIN
-c new version       
+c new version dated May 6       
        implicit none
        real a,b,s
        
