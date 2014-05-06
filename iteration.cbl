@@ -24,6 +24,6 @@
 	   IF Operator = "*" THEN
 	      MULTIPLY Num1 BY Num2 GIVING Result
 	   END-IF.
-	   DISPLAY "Result is of the calculation= ", Result.
+	   DISPLAY "Result is = ", Result.
 	   STOP RUN.
 	   END PROGRAM Iteration.
