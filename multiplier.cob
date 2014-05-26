@@ -2,7 +2,7 @@ IDENTIFICATION DIVISION.
 PROGRAM-ID.  Multiplier.
 * Example program using ACCEPT, DISPLAY and MULTIPLY to 
 * get two single digit numbers from the user and multiply them together
-*
+* changes
 DATA DIVISION.
 
 WORKING-STORAGE SECTION.
