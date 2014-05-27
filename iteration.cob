@@ -15,16 +15,19 @@
 	   MAIN SECTION.
 	       DISPLAY "Enter First Number      : ".
 	       ACCEPT Num1.
+	       DISPLAY Num1.
 	       DISPLAY "Enter Second Number     : ".
 	       ACCEPT Num2.
+	       DISPLAY Num2.
 	       DISPLAY "Enter operator (+ or *) : ".
 	       ACCEPT Operator.
+	       DISPLAY Operator.
 	       IF Operator = "+" THEN
 	        ADD Num1, Num2 GIVING Result
 	       END-IF.
 	       IF Operator = "*" THEN
 	        MULTIPLY Num1 BY Num2 GIVING Result
 	       END-IF.
-	       DISPLAY "Result is of the calculation= ", Result.
+	       DISPLAY "Result is = ", Result.
 	       STOP RUN.
 	   END PROGRAM Iteration.
