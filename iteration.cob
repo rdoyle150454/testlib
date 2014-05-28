@@ -6,14 +6,14 @@
        ENVIRONMENT DIVISION.
 	   DATA DIVISION.
 	   WORKING-STORAGE SECTION.
-	   01  Num1           PIC 99  VALUE ZEROS.
-	   01  Num2           PIC 99  VALUE ZEROS.
-	   01  Result         PIC 9999 VALUE ZEROS.
-	   01  Operator       PIC X  VALUE SPACE.
+	       01  Num1           PIC 99  VALUE ZEROS.
+	       01  Num2           PIC 99  VALUE ZEROS.
+	       01  Result         PIC 9999 VALUE ZEROS.
+	       01  Operator       PIC X  VALUE SPACE.
 		
 	   PROCEDURE DIVISION.
 	   MAIN SECTION.
-	       DISPLAY "Enter First Number      : ".
+		   DISPLAY "Enter First Number      : ".
 	       ACCEPT Num1.
 	       DISPLAY Num1.
 	       DISPLAY "Enter Second Number     : ".
