@@ -5,16 +5,14 @@
 *       [םילוקיע ירבוצל זוזיק תיצקידניא ןוכדעל הניטור] :הניטורה םש  *
 *                                                                   *
 *                                                 :ילנויצקנופ רואת  *
-*                          
-                                         *
+*                                                                   *
 * (לטובמ)4-מ הנוש םהלש רבוצה סוטטסש םילוקיעה ירבוצ םע ץבוק          *
 *             ףסכ שי רבוצבו ,2-מ הנוש םהלש זוזיקה תייצפואו          * 
 *        2-ל זוזיקה תייצפוא תא ןכדעל שי ,הזכ רבוצ לכ רובעב          *
 *                      םירבוצ תיירוטסה תלבטב המושר ףיסוהלו          *
 *                                                                   *
 *                                                          :םיחתפמ  *
-*                                               
-                    *
+*                                                                   *
 *          ןורחא ןוכדע .ת        ךיראת       עצבמ םש       בלש      *
 *                  [    ]    [6-Jul-2012] [TP_ONISSA]      בוציע    *
 *                  [    ]    [6-Jul-2012] [TP_ONISSA]      תונכת    *
@@ -29,19 +27,17 @@
 *                                                                   *
 *                תירבעב םש / רואת    פ/ק             הלבט/ץבוק      *
 *                          [    ]   [  ]                [    ]      *
-*                     
-                                              *
+*                                                                   *
 *                                                   :םישגדהו תורעה  *
 *                                                                   *
 *                                                       [    ]      *
 *                                                                   *
 *                                           :םייונישו םינוכדע בקעמ  *
 *                                                                   *
-*                     יונישה רואת     עצבמ ם
-ש         ךיראת    CID  *
+*                     יונישה רואת     עצבמ םש         ךיראת    CID  *
 * --------------------------------- ------------- ----------- ----- *
 *********************************************************************
-
+**********test
 *********************************************************************
  IDENTIFICATION DIVISION.
 *********************************************************************
@@ -50,8 +46,7 @@
 
 *********************************************************************
  ENVIRONMENT DIVISION.
-*********************
-************************************************
+*********************************************************************
 *--------------------------------------------------------------------
  INPUT-OUTPUT                            SECTION.
 *--------------------------------------------------------------------
@@ -62,8 +57,7 @@
 	   ASSIGN		  TO	       "SYS$DISK"
 	   ORGANIZATION		  IS	       SEQUENTIAL
 	   ACCESS		  IS	       SEQUENTIAL
-           FILE STATUS		  IS	       SP$_COBRMS_F
-ILE_STATUS.
+           FILE STATUS		  IS	       SP$_COBRMS_FILE_STATUS.
 
 *   755 - ןוכדעל רבוצ ינותנ טלפ ץבוק
     SELECT P_TRB71H_755     
@@ -79,8 +73,7 @@ ILE_STATUS.
 	   ACCESS		  IS	       SEQUENTIAL
            FILE STATUS		  IS	       SP$_COBRMS_FILE_STATUS.
 
-***************
-******************************************************
+*********************************************************************
  DATA DIVISION.
 *********************************************************************
 *--------------------------------------------------------------------
@@ -90,8 +83,7 @@ ILE_STATUS.
     VALUE OF ID IS L$_K_TRB71H_755_IKL_NAME.
     COPY "ICD_CDD_WKSP:ICD_PRT_755_DBCR_STOP_PRW" FROM DICTIONARY
        REPLACING    ICD_PRT_755_DBCR_STOP_PRW
-              BY    K_TRB71H_755_IKL_R
-EC.                   
+              BY    K_TRB71H_755_IKL_REC.                   
 
  FD P_TRB71H_755
     VALUE OF ID IS L$_P_TRB71H_755_NAME.
@@ -105,8 +97,7 @@ EC.
        REPLACING    ICD_PRT_875_HST_STP_UPD
               BY    P_TRB71H_875_REC.                   
 
-*-------------------------------
--------------------------------------
+*--------------------------------------------------------------------
  WORKING-STORAGE                         SECTION.
 *--------------------------------------------------------------------
  01 ICA_ICF_EXCEPTION_HANDLER       PIC S9(9) COMP VALUE EXTERNAL ICA_ICF_EXCEPTION_HANDLER.
@@ -116,8 +107,7 @@ EC.
        05 FILLER		    PIC X(15)	    VALUE "ICA_TR_DAT_DIR:".
        05 FILLER		    PIC X(16)	    VALUE "ICA_TRB71H_0040_".
        05 FILLER		    PIC X(04)	    VALUE "ILK_".
-       05 L$_WS01_OPER_ID	    
-PIC 9(16).
+       05 L$_WS01_OPER_ID	    PIC 9(16).
        05 FILLER		    PIC X(04)	    VALUE ".DAT".
 
     03 L$_P_TRB71H_755_NAME.
@@ -130,8 +120,7 @@ PIC 9(16).
     03 L$_P_TRB71H_875_NAME.
        05 FILLER		    PIC X(15)	    VALUE "ICA_TR_DAT_DIR:".
        05 FILLER		    PIC X(15)	    VALUE "ICA_TRB71H_875_".
-   
-    05 FILLER		    PIC X(07)	    VALUE "DEDUCT_".
+       05 FILLER		    PIC X(07)	    VALUE "DEDUCT_".
        05 L$_WS01_OPER_ID	    PIC 9(16).
        05 FILLER		    PIC X(04)	    VALUE ".DAT".
 
@@ -146,8 +135,7 @@ PIC 9(16).
  01 L$_CT01_COUNTERS.
     03 L$_CT01_REC_READ             PIC 9(09).
     03 L$_CT01_REC_754              PIC 9(09).
-    0
-3 L$_CT01_REC_755              PIC 9(09).
+    03 L$_CT01_REC_755              PIC 9(09).
     03 L$_CT01_REC_875              PIC 9(09).
 
  01 L$_CO01_CONSTANTS.
@@ -163,8 +151,7 @@ PIC 9(16).
 
 * ICA wksp and inc copies
 *------------------------
- COPY "ICA_CDD_WKSP:ICA
-_RMS_MSG_WKSP"                FROM DICTIONARY.
+ COPY "ICA_CDD_WKSP:ICA_RMS_MSG_WKSP"                FROM DICTIONARY.
  COPY "ICA_CDD_WKSP:ICA_CONSTANT_VALUES"	     FROM DICTIONARY.
 
  COPY "ICA_CDD_WKSP:ICA_SVT_022_COD_TBL_1083_VAL"    FROM DICTIONARY.
@@ -175,8 +162,7 @@ _RMS_MSG_WKSP"                FROM DICTIONARY.
 * ICD copies
 *-----------
 *--------------------------------------------------------------------
- LINKAGE                  
-              SECTION.
+ LINKAGE                                SECTION.
 *--------------------------------------------------------------------
  COPY 'UTL_CDD_WKSP:UTL_USER_ACW'                    FROM DICTIONARY.
  COPY 'UTL_CDD_WKSP:UTL_CONTROL_ACW'                 FROM DICTIONARY.
@@ -197,8 +183,7 @@ _RMS_MSG_WKSP"                FROM DICTIONARY.
 ****
     IF NOT SP$_COBRMS_SUCCESS IN SP$_COBRMS_FILE_STATUS
        DISPLAY "** Error handling in file: " L$_K_TRB71H_755_IKL_NAME
-  
-     DISPLAY "** SP$_COBRMS_FILE_STATUS: " SP$_COBRMS_FILE_STATUS
+       DISPLAY "** SP$_COBRMS_FILE_STATUS: " SP$_COBRMS_FILE_STATUS
 
        MOVE RMS-CURRENT-STS	TO P$_RMS_CURRENT_STS
        MOVE RMS-CURRENT-STV	TO P$_RMS_CURRENT_STV
@@ -211,8 +196,7 @@ _RMS_MSG_WKSP"                FROM DICTIONARY.
        SET SP$_EXIT_STATUS_FAILURE TO TRUE
 
        MOVE SP$_MSG_ERROR                       TO SP$_ACW_PROC_AUX_STATUS 
-       MOVE "Sec:DECLARATIVES 001-I-O-PROBLEM"  TO SP$_ACW_
-FREE_TEXT
+       MOVE "Sec:DECLARATIVES 001-I-O-PROBLEM"  TO SP$_ACW_FREE_TEXT
 
        EXIT PROGRAM
     END-IF
@@ -227,8 +211,7 @@ FREE_TEXT
        DISPLAY "** Error handling in file: " L$_P_TRB71H_755_NAME
        DISPLAY "** SP$_COBRMS_FILE_STATUS: " SP$_COBRMS_FILE_STATUS
 
-       MOVE RMS-CURRENT-STS	TO
- P$_RMS_CURRENT_STS
+       MOVE RMS-CURRENT-STS	TO P$_RMS_CURRENT_STS
        MOVE RMS-CURRENT-STV	TO P$_RMS_CURRENT_STV
 
        CALL 'ICA_ICF_XLATE_RMS_STS'  USING  ICA_RMS_MSG_WKSP
@@ -244,8 +227,7 @@ FREE_TEXT
        EXIT PROGRAM
     END-IF
     .
-*------------------------------------------------
------------------------
+*-----------------------------------------------------------------------
  003-I-O-PROBLEM	    SECTION.
 *-----------------------------------------------------------------------
     USE AFTER STANDARD ERROR PROCEDURE ON P_TRB71H_875.
@@ -258,8 +240,7 @@ FREE_TEXT
        MOVE RMS-CURRENT-STS	TO P$_RMS_CURRENT_STS
        MOVE RMS-CURRENT-STV	TO P$_RMS_CURRENT_STV
 
-       CALL 'ICA_ICF_XLATE
-_RMS_STS'  USING  ICA_RMS_MSG_WKSP
+       CALL 'ICA_ICF_XLATE_RMS_STS'  USING  ICA_RMS_MSG_WKSP
 
        DISPLAY MSG_TEXT	    IN ICA_RMS_MSG_WKSP(1)
        DISPLAY MSG_TEXT	    IN ICA_RMS_MSG_WKSP(2)
@@ -276,8 +257,7 @@ _RMS_STS'  USING  ICA_RMS_MSG_WKSP
 
 *--------------------------------------------------------------------
  A-MAIN			    SECTION.
-*--------------------------------
-------------------------------------
+*--------------------------------------------------------------------
  A-00.
 
     PERFORM B-INIT
@@ -299,8 +279,7 @@ _RMS_STS'  USING  ICA_RMS_MSG_WKSP
     DISPLAY 'Start of program: ICA_TRB71H_SET_ACCUM_IKUL.'
 
     INITIALIZE L$_WS01_VARAIBLES
-               L
-$_CT01_COUNTERS
+               L$_CT01_COUNTERS
                L$_SW01_SWITCHES
                ICA_TRB71H_SET_ACCUM_IKUL_OUT
 
@@ -317,8 +296,7 @@ $_CT01_COUNTERS
     PERFORM BC-READ
     .
  B-EXIT.    EXIT.
-*----------------------------------------------
-----------------------
+*--------------------------------------------------------------------
  BA-OPEN-OUTPUT-FILES                     SECTION.
 *--------------------------------------------------------------------
  BA-00.
@@ -334,8 +312,7 @@ $_CT01_COUNTERS
     .
  BA-EXIT.    EXIT.
 *--------------------------------------------------------------------
- BC-REA
-D                     SECTION.
+ BC-READ                     SECTION.
 *--------------------------------------------------------------------
  BC-00.
 
@@ -355,8 +332,7 @@ D                     SECTION.
 
     PERFORM UB-WRITE-755-RECORD
 
-    PERFORM UC-WRITE-
-875-RECORD
+    PERFORM UC-WRITE-875-RECORD
     .
  C-EXIT.    EXIT.
 *-----------------------------------------------------------------------------
@@ -378,8 +354,7 @@ D                     SECTION.
      TO L$_CT01_REC_755
     .
  UB-EXIT.    EXIT.
-*---------------------------------------
---------------------------------------
+*-----------------------------------------------------------------------------
  UC-WRITE-875-RECORD				SECTION.
 *-----------------------------------------------------------------------------
  UC-00.
@@ -398,8 +373,7 @@ D                     SECTION.
     MOVE "0" 
       TO OLD_VALUE			IN P_TRB71H_875_REC (1:1)
 
-    MOVE ACCUM_INT
-R_ID			IN K_TRB71H_755_IKL_REC
+    MOVE ACCUM_INTR_ID			IN K_TRB71H_755_IKL_REC
       TO ACCUM_INTR_ID			IN P_TRB71H_875_REC
 
     MOVE SP$_ACW_USER_NAME		IN UTL_USER_ACW  
@@ -416,8 +390,7 @@ R_ID			IN K_TRB71H_755_IKL_REC
  UC-EXIT.    EXIT.
 *--------------------------------------------------------------------
  X-ERRORS				SECTION.
-*----------------------------------------------------
-----------------
+*--------------------------------------------------------------------
  X-00.
 
     DISPLAY 'Att. Program: ICA_TRB71H_SET_ACCUM_IKUL. ended with errors!!!'
@@ -436,8 +409,7 @@ R_ID			IN K_TRB71H_755_IKL_REC
             L$_CT01_REC_READ             
 
     DISPLAY "Total records written in file 755 deduct:",
-    
-        L$_CT01_REC_755             
+            L$_CT01_REC_755             
 
     DISPLAY "Total records written in file 875 deduct:",
             L$_CT01_REC_875             
@@ -455,8 +427,7 @@ R_ID			IN K_TRB71H_755_IKL_REC
     CLOSE K_TRB71H_755_IKL
     DISPLAY "Close Input File: " L$_K_TRB71H_755_IKL_NAME
 
-    CLO
-SE  P_TRB71H_755
+    CLOSE  P_TRB71H_755
     DISPLAY "Close Output File: " L$_P_TRB71H_755_NAME
 
     CLOSE  P_TRB71H_875
