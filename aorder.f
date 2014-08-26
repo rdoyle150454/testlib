@@ -13,7 +13,7 @@ c
          enddo
       enddo
 c
-      wrte(*,*) "Hundred's digit is the first index of the array"
+      write(*,*) "Hundred's digit is the first index of the array"
       write(*,*) 'One''s digit is the second index'
       write(*,2000) ((a(i,j),j=1,5),i=1,5)
       write(*,2001) b
