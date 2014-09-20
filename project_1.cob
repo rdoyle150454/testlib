@@ -4,6 +4,6 @@ ENVIRONMENT DIVISION.
 DATA DIVISION.
 PROCEDURE DIVISION.
 Main-program section.
-    DISPLAY "Hello world from the test program!".
+    DISPLAY "Hello world from the demo program!".
     STOP RUN.
 END PROGRAM Project_1.
