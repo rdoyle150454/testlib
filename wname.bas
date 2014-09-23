@@ -7,5 +7,6 @@
 60 S$ = S$ + "*"
 70 NEXT I
 80 PRINT S$
+85 CALL PNAME
 90 PRINT "Goodbye "; U$
 100 END PROGRAM
