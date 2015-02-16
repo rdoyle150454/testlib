@@ -6,7 +6,7 @@
 c
 c     Put some values into "a", and because it
 c     occupies the same space also into "b"
-c
+chello
       do i=1,5
          do j=1,5
             a(i,j)= 100*i+j
