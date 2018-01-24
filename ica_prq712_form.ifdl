@@ -1,0 +1,4000 @@
+  Form ICA_PRQ711_FORM
+/*   ============        */
+ 
+/*   
+    CHANGES HISTORY:
+    ================
+    last update:  12.5.99  - (EFRAIM WEIL) רצומ רפסמ תרימש
+
+    TP_YHASID, 21/01/02, #03
+	CHANGE THE LENGTH ON SCRN OF 755.DBCR_STOP_SUM
+
+    TP_THOROV, 13/02/03, #04
+	CHANGE SCREEN, ACTNG_ACC_NUM TO KEY PANEL TO SHLIFA.
+	ADD LEFT PANEL, NEW FIELDS FROM 755.
+
+    TP_THOROV, 04/06/03, #05
+	FIX MESSAGE OF P$_UNTIL_DATE
+
+    TP_THOROV, 09/09/03, #06
+	CHANGE זוזיק.א TO םוסח/שיגנ IN SCROLL OF LEFT PANEL.
+
+    TP_THOROV, 13/11/03, #07
+	ADD TABLE 022/1128 FOR STATUS.
+
+    TP_YHASID, 05/07/04, #08
+        CHANGE EXT_ID_NUM_TYPE_CODE LENGTH 2->4.
+
+    TP_THOROV, 15/07/04, #09
+	ADD PRIVATE_LABEL_PANEL
+
+    TP_THOROV, 20/07/04, #10
+	ADD VAL V346$CHAIN_DEAL_PRIVATE_LABEL
+
+    tp_thorov, 22/07/04, #11
+	remove vals V346$CHAIN_PRIVATE_LABEL and V346$MERCHANT_PRIVATE_LABEL
+
+    tp_thorov, 03/08/04, #12
+	add vals for calnet.
+
+    tp_thorov, 18/05/05, #13
+	replace title of עורא קית to היבג קית"
+
+    tp_thorov, 22/11/05, #14
+	fields DBCR_STOP_SUM and DBCR_STOP_BALANCE changed to DOM_AMOUNT_TOTAL.
+
+    TP_RAVRAM, 15/08/11, #15
+        ADD NEW FIELD:P$_CARD_TYPE_DESC  
+
+    TP_IFARGI, 25/01/12, #16
+        ISRACARD2012
+*/
+
+    Form Data 
+        Copy
+	    "ICA_SOURCE:ICA_MSG_PRQ711_FORM_DATA.IFDL"
+	End Copy
+
+        Copy
+	    "ICA_SOURCE:ICA_MSG_PRU711_FORM_DATA.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_GEN_FORM_DATA.IFDL"
+        End Copy
+
+/* Return status from PEU routine    */
+
+        Copy
+            ICA_CDD_WKSP.ICA_PEU_RETURN_STATUS_FDW from Dictionary
+        End Copy         
+
+        Copy
+            ICA_CDD_WKSP.ICA_PRQ711_FDW from Dictionary
+        End Copy         
+
+        Copy
+	    ICA_CDD_WKSP.ICA_PRT_755_ACCUM_STATUS_VAL from Dictionary
+        End Copy
+
+        Copy
+	    ICA_CDD_WKSP.ICA_677_LOV_FDW from Dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_677_STRUCT from Dictionary
+        End Copy
+
+        Copy
+            "ICA_SOURCE:ICA_677_START.IFDL"
+        End Copy
+
+	Copy
+	    ICA_CDD_WKSP.ICA_022_LOV_FDW from dictionary
+        End Copy
+
+	Copy
+	    ICA_CDD_WKSP.ICA_022_STRUCT from dictionary
+        End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_022_START.IFDL"
+        End Copy
+
+	Group ICA_677_GROUP 
+	    Occurs 100
+	    Current P$_677_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_TRT_677_ACTG_ACCNT  from dictionary
+	    End Copy
+	End Group 
+
+        Group ICA_022_GROUP
+            Occurs 100
+            Current P$_022_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1)
+	    Copy
+		ICD_CDD_WKSP.ICD_SVT_022_COD_TBL from Dictionary
+	    End Copy
+	    Copy
+		ICA_CDD_FIELD.REVERSE_CODE from Dictionary
+	    End Copy
+        End Group
+
+	Copy
+	    ICD_CDD_WKSP.ICD_SVT_021_COD_TBL_DEF from Dictionary
+	End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_CALL_CONTROL_DIGIT_WKSP      FROM DICTIONARY
+        End copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_CONTROL_DIGIT_VAL from dictionary
+        End Copy
+
+        Copy
+ 	    ICA_CDD_WKSP.ICA_PRT_327_BANKS_VAL  from Dictionary
+        End Copy
+
+        Copy 
+          ICA_CDD_WKSP.ICA_PRT_346_EXT_ID_N_TP_VAL from dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_CT_PAGE_PTR_WKSP from Dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_LOV_FORM_DATA from Dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_LOV_CONSTANT_VALUES from Dictionary
+        End Copy
+
+        Copy
+	    "ICA_SOURCE:ICA_MSG_GNRL_FORM_DATA.IFDL"
+        End Copy
+
+        Copy
+	    ICA_CDD_WKSP.ICA_CONSTANT_VALUES from Dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_346_LOV_FDW from Dictionary
+        End Copy
+ 
+        Copy
+            ICA_CDD_WKSP.ICA_346_STRUCT from Dictionary
+        End Copy
+ 
+        Copy
+            "ICA_SOURCE:ICA_346_START.IFDL"
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_481_LOV_FDW from Dictionary
+        End Copy
+ 
+        Copy
+            ICA_CDD_WKSP.ICA_481_STRUCT from Dictionary
+        End Copy
+ 
+        Copy
+            "ICA_SOURCE:ICA_481_START.IFDL"
+        End Copy
+
+/* Form Data fields of List Of Values Panel        */
+
+        Copy
+            ICA_CDD_WKSP.ICA_316_LOV_FDW from Dictionary
+        End Copy
+ 
+        Copy
+            ICA_CDD_WKSP.ICA_316_STRUCT from Dictionary
+        End Copy
+ 
+        Copy
+            "ICA_SOURCE:ICA_316_START.IFDL"
+        End Copy
+
+/* Array that holds list of values of 481.   
+   Used in LOV panel                                     */
+
+	Group ICA_481_GROUP 
+	    Occurs 100
+	    Current P$_481_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_PRT_481_STOP_APP from dictionary
+	    End Copy
+	End Group
+
+/* Array that holds list of values of 316.   
+   Used in LOV panel                                     */
+
+	Group ICA_316_GROUP 
+	    Occurs 100
+	    Current P$_316_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_PRT_316_ACC_TYPES from dictionary
+	    End Copy
+	End Group  
+
+/* Array that holds list of values of 346.   
+   Used in LOV panel                                     */
+
+	Group ICA_346_GROUP 
+	    Occurs 100
+	    Current P$_346_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_PRT_346_EXT_ID_N_TP from dictionary
+	    End Copy
+	End Group 
+
+/* Form Data fields of List Of Values Panel        */
+
+        Copy
+            ICA_CDD_WKSP.ICA_327_LOV_FDW from Dictionary
+        End Copy
+ 
+        Copy
+            ICA_CDD_WKSP.ICA_327_STRUCT from Dictionary
+        End Copy
+ 
+        Copy
+            "ICA_SOURCE:ICA_327_START.IFDL"
+        End Copy
+
+/* Form Data fields of List Of Values Panel        */
+
+        Copy
+            ICA_CDD_WKSP.ICA_328_LOV_FDW from Dictionary
+        End Copy
+ 
+        Copy
+            ICA_CDD_WKSP.ICA_328_STRUCT from Dictionary
+        End Copy
+ 
+        Copy
+            "ICA_SOURCE:ICA_328_START.IFDL"
+        End Copy  
+
+
+/* Array that holds list of values of 327.   
+   Used in LOV panel                                     */
+
+	Group ICA_327_GROUP 
+	    Occurs 100
+	    Current P$_327_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_PRT_327_BANKS from dictionary
+	    End Copy
+	End Group 
+
+/* Array that holds list of values of 328.   
+   Used in LOV panel                                     */
+
+	Group ICA_328_GROUP 
+	    Occurs 100
+	    Current P$_328_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+		ICD_CDD_WKSP.ICD_PRT_328_BRANCH from dictionary
+	    End Copy
+	End Group 
+
+        Copy
+	    ICA_CDD_WKSP.ICA_CMT_150_factor_type_val from Dictionary
+        End Copy
+
+        Copy
+           ICA_CDD_WKSP.ICA_PRF_PROD_EXT_ID_SEP_PEW from dictionary
+        End copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_AUT_WKSP from Dictionary
+        End Copy
+
+        Copy
+            ICA_CDD_WKSP.ICA_CMX_WKSP from Dictionary
+        End Copy
+
+        Copy
+             ICA_CDD_WKSP.ICA_MPQ_FORM_DATA from Dictionary
+        End Copy
+
+        Copy
+            UTL_CDD_WKSP.UTL_CONTROL_ACW from Dictionary
+        End Copy
+
+        Copy
+            UTL_CDD_WKSP.UTL_USER_ACW from Dictionary
+        End Copy
+
+
+	L$_CAME_FROM_LAST_FIELD LONGWORD INTEGER
+
+        Group ICA_PRQ711_SCROLL_GROUP
+            Occurs 100
+            Current P$_CURRENT_NUM
+
+            CURRENT_LINE  Character (1)
+	    Copy
+		ICA_CDD_WKSP.ICA_PRQ711_SCROLL_WKSP from Dictionary
+	    End Copy
+        End Group
+
+        Copy
+            ICA_CDD_WKSP. ICA_DISPLAY_ACC_NUM_PEW      FROM DICTIONARY
+        End copy
+
+        L$_ACC_NUM      INTEGER  (8)
+        L$_EXT_ID_FOUND CHARACTER (1)
+
+        Copy
+            ICA_CDD_WKSP.ICA_007_LOV_FDW from Dictionary
+        End Copy
+
+        Copy
+            "ICA_SOURCE:ICA_007_START.IFDL"
+        End Copy
+
+	Group ICA_007_GROUP 
+	    Occurs 100
+	    Current P$_007_CURRENT_NUM
+
+            P$_LOV_CURRENT_LINE  Character (1) 
+	    Copy 
+                ICD_CDD_WKSP.ICD_AUT_007_SVT_SPC_RT  from Dictionary
+	    End Copy
+	End Group 
+
+    End Data
+
+    Form Record ICA_677_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_677_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_677_MPQ_PEW
+       Group ICA_677_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_TRT_677_ACTG_ACCNT from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_677_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_677_STRUCT from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_022_PEW
+        Copy
+            ICA_CDD_WKSP.ICA_022_PEW from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_022_MPQ_PEW
+      Group ICA_022_GROUP   
+	Occurs 100
+        Copy
+            ICD_CDD_WKSP.ICD_SVT_022_COD_TBL from Dictionary
+        End Copy
+	Copy
+	    ICA_CDD_FIELD.REVERSE_CODE from Dictionary
+	End Copy
+
+      End group
+
+      Copy
+          ICD_CDD_WKSP.ICD_SVT_021_COD_TBL_DEF from Dictionary
+      End Copy
+
+    End Record
+
+    Form Record ICA_CT_PAGE_PTR_WKSP
+        Copy
+            ICA_CDD_WKSP.ICA_CT_PAGE_PTR_WKSP from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_LOV_CTW
+        Copy
+            ICA_CDD_WKSP.ICA_LOV_CTW from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_007_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_007_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_007_STRUCT
+        Copy
+            ICA_CDD_WKSP.ICA_007_STRUCT from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_007_MPQ_PEW
+       Group ICA_007_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_AUT_007_SVT_SPC_RT from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+   Form Record ICA_DISPLAY_ACC_NUM_PEW
+        Copy
+            ICA_CDD_WKSP. ICA_DISPLAY_ACC_NUM_PEW      FROM DICTIONARY
+        End copy
+   End Record
+
+   Form Record ICA_CALL_CONTROL_DIGIT_WKSP 
+        Copy
+            ICA_CDD_WKSP.ICA_CALL_CONTROL_DIGIT_WKSP FROM DICTIONARY
+        End copy
+   End Record
+
+    Form Record ICA_PRF_PROD_EXT_ID_SEP_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_PRF_PROD_EXT_ID_SEP_PEW from dictionary
+       End copy
+    End Record
+
+    Form Record ICA_PRF_PROD_EXT_ID_JUST_PEW   
+       Copy 
+           ICA_CDD_WKSP.ICA_PRF_PROD_EXT_ID_JUST_PEW    from dictionary
+       End copy
+    End Record
+
+    Form Record UTL_CONTROL_ACW
+        Copy
+            UTL_CDD_WKSP.UTL_CONTROL_ACW from Dictionary
+        End Copy
+    End Record
+
+    Form Record UTL_USER_ACW
+        Copy
+            UTL_CDD_WKSP.UTL_USER_ACW from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_AUT_WKSP 
+       Copy
+           ICA_CDD_WKSP.ICA_AUT_WKSP from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_CMX_WKSP
+        Copy
+            ICA_CDD_WKSP.ICA_CMX_WKSP from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_022_STRUCT
+        Copy
+            ICA_CDD_WKSP.ICA_022_STRUCT from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_MPQ_CTW 
+        Copy
+             ICA_CDD_WKSP.ICA_MPQ_CTW from Dictionary
+        End Copy
+    End Record
+
+/* Records for PEU routines             */
+
+    Form Record ICA_316_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_316_PEW from Dictionary
+       End Copy
+    End Record  
+
+    Form Record ICA_316_MPQ_PEW
+       Group ICA_316_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_PRT_316_ACC_TYPES from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_316_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_316_STRUCT from Dictionary
+       End Copy
+    End Record 
+
+/* Records for PEU routines             */
+    Form Record ICA_481_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_481_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_481_MPQ_PEW
+       Group ICA_481_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_PRT_481_STOP_APP from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_481_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_481_STRUCT from Dictionary
+       End Copy
+    End Record
+
+/* Records for PEU routines             */
+
+     Form Record ICA_327_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_327_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_327_MPQ_PEW
+       Group ICA_327_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_PRT_327_BANKS from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_327_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_327_STRUCT from Dictionary
+       End Copy
+    End Record
+
+/* Records for PEU routines             */
+
+    Form Record ICA_328_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_328_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_328_MPQ_PEW
+       Group ICA_328_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_PRT_328_BRANCH from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_328_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_328_STRUCT from Dictionary
+       End Copy
+    End Record  
+
+    Form Record ICA_346_PEW
+       Copy
+           ICA_CDD_WKSP.ICA_346_PEW from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_346_MPQ_PEW
+       Group ICA_346_GROUP
+	   Occurs 100
+	       Copy
+        	   ICD_CDD_WKSP.ICD_PRT_346_EXT_ID_N_TP from Dictionary
+       		End Copy
+	   End Group
+    End Record
+
+    Form Record ICA_346_STRUCT
+       Copy
+           ICA_CDD_WKSP.ICA_346_STRUCT from Dictionary
+       End Copy
+    End Record
+
+    Form Record ICA_PRQ711_DATA_OTW
+        Group ICA_PRQ711_SCROLL_GROUP
+            Occurs 100
+	    Copy
+		ICA_CDD_WKSP.ICA_PRQ711_SCROLL_WKSP from Dictionary
+	    End Copy
+        End Group
+    End Record
+
+    Form Record ICA_PRQ711_KEY_INW
+        Copy
+            ICA_CDD_WKSP.ICA_PRQ711_KEY from Dictionary
+        End Copy
+    End Record
+
+    Form Record ICA_PRQ711_KEY_OTW
+        Copy
+            ICA_CDD_WKSP.ICA_PRQ711_KEY from Dictionary
+        End Copy
+    End Record
+
+    Record List  UTL_CONTROL_LIST
+        UTL_CONTROL_ACW
+        UTL_USER_ACW
+        ICA_AUT_WKSP
+    End List
+
+    Record List PRQ711_KEY_LIST_OTW
+        UTL_CONTROL_ACW
+        ICA_PRQ711_KEY_OTW
+    End List
+
+    Record List PRQ711_KEY_LIST_INW
+        UTL_CONTROL_ACW
+        ICA_PRQ711_KEY_INW
+    End List
+
+    Record List PRQ711_KEY_DATA_LIST_OTW
+	UTL_CONTROL_ACW
+	ICA_PRQ711_KEY_OTW
+        ICA_PRQ711_DATA_OTW
+    End List
+
+    Record List PRQ711_KEY_DATA_CTW_LIST_OTW
+	UTL_CONTROL_ACW
+	ICA_MPQ_CTW
+	ICA_PRQ711_KEY_OTW
+        ICA_PRQ711_DATA_OTW
+    End List
+
+    Record List PRQ711_DATA_LIST_OTW
+	UTL_CONTROL_ACW
+	ICA_MPQ_CTW
+        ICA_PRQ711_DATA_OTW
+	ICA_PRQ711_KEY_OTW
+    End List
+
+    Record List PRQ711_MPQ_LIST_INW
+        UTL_CONTROL_ACW
+	ICA_MPQ_CTW
+    End List
+
+    Record List ICA_CMX_LIST_OTW
+	ICA_CMX_WKSP
+        ICA_AUT_WKSP
+	UTL_CONTROL_ACW
+    End List
+
+    Record List ICA_CMX_LIST_INW
+	ICA_CMX_WKSP
+	UTL_CONTROL_ACW
+    End List
+
+    Record List ICA_CANCEL_CONTROL_LIST
+	UTL_CONTROL_ACW
+    End List
+
+    Layout VT_LAYOUT
+        Device
+            Terminal
+                Type %VT200_Hebrew
+        End Device
+
+	/*Language "HEBREW"*/
+        Size 24 Lines by 80 Columns
+        Display Viewport
+            %Terminal_Width_80
+
+        List STATUS_LIST 
+             0
+             1       
+             2       
+             3       
+             4
+             5
+             6  
+        End List
+
+        Viewport ICA_PRU119_ACC_NUM_VP 
+            Lines 7 Through 7
+            Columns 57 Through 66
+         End Viewport
+
+        Viewport ICA_PRQ711_KEY_VP
+            Lines 3 Through 8
+            Columns 1 Through 80
+        End Viewport
+
+        Viewport ICA_PRQ711_DATA_VP
+            Lines 9 Through 22
+            Columns 1 Through 80
+        End Viewport
+
+        Viewport EXT_ID_VP
+            Lines 5 Through 5
+            Columns 46 Through 66
+        End Viewport
+
+	Copy
+	    "ICA_SOURCE:ICA_HEADER_VP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_MSG_VP.IFDL"
+	End Copy
+
+        Copy
+	   "ICA_SOURCE:ICA_481_LOV_VP.IFDL"
+	End Copy			
+
+	Copy
+	    "ICA_SOURCE:ICA_677_LOV_VP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_022_LOV_VP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_022_START_VP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_CASE_FACTOR_VP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_KEYS_HELP_VP.IFDL"
+	End Copy
+
+/* Viewport for 316 LOV panel  */
+
+        Copy
+	   "ICA_SOURCE:ICA_316_LOV_VP.IFDL"
+	End Copy			
+
+/* Viewport for 327 LOV panel  */
+
+        Copy
+	   "ICA_SOURCE:ICA_327_LOV_VP.IFDL"
+	End Copy			
+
+/* Viewport for 328 LOV panel  */
+
+        Copy
+	   "ICA_SOURCE:ICA_328_LOV_VP.IFDL"
+	End Copy			
+
+/* Viewport for 346 LOV panel  */
+
+        Copy
+	   "ICA_SOURCE:ICA_346_LOV_VP.IFDL"
+	End Copy			
+
+	Copy
+	    "ICA_SOURCE:ICA_GEN_FUNC_KEYS.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_GEN_FUNC_RESP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_MSG_RESP.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_HEADER_RESP.IFDL"
+	End Copy
+
+/* This response displays header panel  */
+        Copy
+	    "ICA_SOURCE:ICA_SEND_HDR_RESP.IFDL"
+	End Copy
+
+/* This response displays error msg before canceling task 
+   removes all panels & waits for the user 
+   to hit any key to return to main menu */
+        Copy
+	    "ICA_SOURCE:ICA_SEND_FATAL_MSG.IFDL"
+	End Copy 
+
+/* This response performs the GET_MPQ_KEY step, passing in parameter info to
+   the key panel and receiving the user's parameter selections when 
+   P$_REFRESH_FLAG is 0 */
+
+    INTERNAL RESPONSE  DISPLAY_EXT_ID_PANEL
+        LET L$_EXT_ID_FOUND = V$_NO
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$VISA_CREDIT_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    VISA_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+/**ER***2.11.97***b**/
+        If (EXT_ID_NUM_TYPE_CODE = V346$DINERS_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    DINERS_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$BUDGET_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    BUDGET_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$SUPERZOL_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    SUPERZOL_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$ECI_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    ECI_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+/**ER***2.11.97***e**/
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$DELEK_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    DELEK_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+/**ER***2.11.97***b**/
+        If (EXT_ID_NUM_TYPE_CODE = V346$2_CARS_DEAL) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    PAZ_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+/**ER***2.11.97***e**/
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$PRIVATE_DALKAN_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    DALKAN_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+  
+        If (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_AMEX) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    AMEX_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$HILTON_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    HILTON_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$RAC_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    RAC_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+  
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+        If (EXT_ID_NUM_TYPE_CODE = V346$EURO_MASTER_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    EURO_MASTER_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+
+/* #09 */
+        If (EXT_ID_NUM_TYPE_CODE = V346$PRIVATE_LABEL_CREDIT_CARD) Then
+          CALL 'ICA_PRF_PROD_EXT_ID_SEP_PEU' USING ICA_PRF_PROD_EXT_ID_SEP_PEW
+          DISPLAY    PRIVATE_LABEL_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+/* #09 */
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM   Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+            EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_EURO_MASTER  Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+/**sh***29.9.97**diners+private**b**/    
+/* #11:	    EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_PRIVATE_LABEL   Or */
+            EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_DINERS	 Or
+/* #09 */   EXT_ID_NUM_TYPE_CODE >= V346$PRIVATE_LABEL_MERCHANT_NUM Or
+/* #12: */  EXT_ID_NUM_TYPE_CODE = V346$CALNET_MERCHANT_DIST_CARD Or
+/* #16 -S */
+            EXT_ID_NUM_TYPE_CODE  = V346$MERCHANT_NUM_ISRACART Or
+/* #16 -E */
+	    EXT_ID_NUM_TYPE_CODE = V346$CALNET_MERCHANT_DIST_LOAN)
+	Then
+/**sh***29.9.97**diners+private**e**/    
+	    DISPLAY    MERCHANT_PANEL
+	    LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$HERTZ_CARD) Then
+          DISPLAY    HERTZ_PANEL
+          LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If ((EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL)    Or
+/**sh***29.9.97**diners+private**b**/    
+/* #11:	   (EXT_ID_NUM_TYPE_CODE = V346$CHAIN_PRIVATE_LABEL)    Or */
+           (EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_DINERS)    Or 
+/**sh***29.9.97**diners+private**e**/    
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+           (EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_EURO_MASTER)    Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+/* #10: */ (EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_PRIVATE_LABEL) Or
+/* #12: */ (EXT_ID_NUM_TYPE_CODE = V346$CALNET_CHAIN_DIST_CARD) Or
+	   (EXT_ID_NUM_TYPE_CODE = V346$CALNET_CHAIN_DIST_LOAN) Or
+/* #16 -S */
+            EXT_ID_NUM_TYPE_CODE  = V346$CHAIN_DEAL_ISRACART Or
+/* #16 -E */
+           (EXT_ID_NUM_TYPE_CODE =  V346$COMPANY_DEAL)   Or
+           (EXT_ID_NUM_TYPE_CODE =  V346$YAPA_CARD)      Or
+           (EXT_ID_NUM_TYPE_CODE =  V346$TIK_TAG))       Then
+            Display    SIX_LENGTH_PANEL 
+            LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$CARS_DEAL) Then
+            Display    CARS_DEAL_PANEL 
+            LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$CLUB_DEAL) Then
+            Display    CLUB_PANEL 
+            LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If (EXT_ID_NUM_TYPE_CODE = V346$BANK_BRANCH_DEAL) Then
+            Display    BANK_PANEL 
+            LET L$_EXT_ID_FOUND = V$_YES
+        End if
+
+        If ((EXT_ID_NUM_TYPE_CODE = 0) OR 
+            (L$_EXT_ID_FOUND = V$_NO))
+        Then 
+          DISPLAY    EXT_ID_DEFAULT_PANEL
+        End if
+    END RESPONSE
+
+    INTERNAL Response DEACTIVATE_RESP
+        DEACTIVATE panel EXT_ID_DEFAULT_PANEL
+        DEACTIVATE panel VISA_PANEL
+        DEACTIVATE panel DELEK_PANEL
+/**ER***2.11.97***b**/
+        DEACTIVATE panel DINERS_PANEL
+        DEACTIVATE panel BUDGET_PANEL
+        DEACTIVATE panel SUPERZOL_PANEL
+        DEACTIVATE panel ECI_PANEL
+        DEACTIVATE panel PAZ_PANEL
+/**ER***2.11.97***e**/
+        DEACTIVATE panel DALKAN_PANEL
+        DEACTIVATE panel AMEX_PANEL
+        DEACTIVATE panel HILTON_PANEL
+        DEACTIVATE panel RAC_PANEL
+        DEACTIVATE panel HERTZ_PANEL
+        DEACTIVATE panel MERCHANT_PANEL
+        DEACTIVATE Panel SIX_LENGTH_PANEL  
+        DEACTIVATE Panel CARS_DEAL_PANEL 
+        DEACTIVATE Panel CLUB_PANEL 
+        DEACTIVATE Panel BANK_PANEL 
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+        DEACTIVATE Panel EURO_MASTER_PANEL
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+        /* #09 */
+        DEACTIVATE Panel PRIVATE_LABEL_PANEL
+        /* #09 */
+
+    END RESPONSE
+
+    Transceive Response PRQ711_KEY_LIST_OTW PRQ711_KEY_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+	Reset ICA_PRQ711_SCROLL_GROUP(1:100) 
+        If (SP$_ACW_TASK_PHASE = "START_PHASE")
+	Then
+	    Reset P$_PAGE_NUMBER
+        End If	    
+	Display
+	    ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+	Display
+	    ICA_PRQ711_DATA_PANEL
+	Activate
+	    Panel ICA_PRQ711_KEY_PANEL
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+    End Response
+
+/* This response performs the GET_MPQ_KEY step, passing in parameter info to
+   the key panel and receiving the user's parameter selections when 
+   P$_REFRESH_FLAG is 1 */
+
+    Transceive Response UTL_CONTROL_ACW PRQ711_KEY_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+	Display
+	    ICA_PRQ711_DATA_PANEL
+	Display
+	    ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+	Activate
+	    Panel ICA_PRQ711_KEY_PANEL
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+    End Response
+
+/* This response performs the GET_MPQ_KEY step, passing in parameter info to
+   the key panel and receiving the user's parameter selections when 
+   P$_REFRESH_FLAG is 2 */
+
+    Transceive Response PRQ711_KEY_DATA_LIST_OTW PRQ711_KEY_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+	Display
+	    ICA_PRQ711_DATA_PANEL
+	Display
+	    ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+	Activate
+	    Panel ICA_PRQ711_KEY_PANEL
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+    End Response
+
+/* This response performs the DISPLAY_PAGE step, displaying the first 100 
+   transactions on the data panel, and receiving the user's input with 
+   regard to ZOOM when P$_REFRESH_FLAG is V$_REGULAR */
+
+   Transceive Response PRQ711_DATA_LIST_OTW PRQ711_MPQ_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+        Display ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+        Activate Panel ICA_PRQ711_DATA_PANEL
+
+	If (SP$_ACW_FUNCTION_KEY = "PREV_SCREEN") And
+	   (ACTION_KIND <> 1 And
+	    ACTION_KIND <> 2 And
+	    ACTION_KIND <> 8 And
+	    ACTION_KIND <> 9) 
+	Then
+	    Let P$_FIRST_NUM = 91
+	    Position To Icon ICA_PRQ711_SCROLL_GROUP(100).CURSOR_PLACE
+		On ICA_PRQ711_DATA_PANEL
+	End If 
+
+	If (SP$_ACW_FUNCTION_KEY = "ZOOM") Or 
+	   (SP$_ACW_FUNCTION_KEY = "CALL_TASK")  Or
+	   (SP$_ACW_FUNCTION_KEY = "PREF_TASK") Then
+	    Position To Icon
+		ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM_SAVED).CURSOR_PLACE
+		On ICA_PRQ711_DATA_PANEL
+	End If
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+   End Response 
+
+/* This response performs the DISPLAY_PAGE step, displaying the first 100 
+   transactions on the data panel, and receiving the user's input with 
+   regard to ZOOM when P$_REFRESH_FLAG is V$_REFRESH */
+
+   Transceive Response UTL_CONTROL_ACW PRQ711_MPQ_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+        Display ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+        Activate Panel ICA_PRQ711_DATA_PANEL
+	If (SP$_ACW_FUNCTION_KEY = "ZOOM") Or 
+	   (SP$_ACW_FUNCTION_KEY = "CALL_TASK")  Or
+	   (SP$_ACW_FUNCTION_KEY = "PREF_TASK") Then
+	    Position To Icon
+		ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM_SAVED).CURSOR_PLACE
+		On ICA_PRQ711_DATA_PANEL
+	End If
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+   End Response 
+
+/* This response performs the DISPLAY_PAGE step, displaying the first 100 
+   transactions on the data panel, and receiving the user's input with 
+   regard to ZOOM when P$_REFRESH_FLAG is V$_REDISPLAY */
+
+   Transceive Response PRQ711_KEY_DATA_CTW_LIST_OTW PRQ711_MPQ_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+	Display
+	    ICA_PRQ711_KEY_PANEL
+        Include DISPLAY_EXT_ID_PANEL
+        Activate Panel ICA_PRQ711_DATA_PANEL
+	If (SP$_ACW_FUNCTION_KEY = "ZOOM") Or 
+	   (SP$_ACW_FUNCTION_KEY = "CALL_TASK")  Or
+	   (SP$_ACW_FUNCTION_KEY = "PREF_TASK") Then
+	    Position To Icon
+		ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM_SAVED).CURSOR_PLACE
+		On ICA_PRQ711_DATA_PANEL
+	End If
+        Request Exit Response
+            Let SP$_ACW_FORM_MSG = " "
+            Return
+        End Response
+   End Response 
+
+/* This response performs the CASE FACTOR step. */
+
+   Transceive Response ICA_CMX_LIST_OTW ICA_CMX_LIST_INW
+	Include HEADER_RESP
+        Include MSG_RESP
+        LET FACTOR_ID = 
+        	ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM).ACCUM_INTR_ID
+        LET FACTOR_DESC = V150$ACCUM_DEB_DESC
+        LET FACTOR_TYPE = V150$ACCUM_DEB_TYPE
+        LET P$_ext_id_num_type = 0
+        LET P$_factor_int_id   = 0
+        Display
+        	CASE_FACTOR_PANEL
+        Activate Panel CASE_FACTOR_PANEL
+
+        request Exit Response
+            Let P$_CURRENT_NUM_SAVED = P$_CURRENT_NUM
+            Return
+        End Response
+
+   End Response 
+
+   Apply 
+    Field Default of
+	Exit Response
+	    Message  " "
+	End Response
+        Active Highlight Reverse
+   End Default
+
+	Copy
+	    "ICA_SOURCE:ICA_MSG_PANEL.IFDL"
+	End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_HEADER_PANEL.IFDL"
+	End Copy
+
+/*  display acc Panel
+    ===============  */
+
+       PANEL ICA_PRU119_ACC_NUM_PANEL
+             VIEWPORT ICA_PRU119_ACC_NUM_VP  
+       
+       Field P$_ACC_NUM
+                Line 1
+                Column 1
+       	        Output Picture X(10)
+                Protected
+            End Field
+        END PANEL
+
+	Copy
+	    "ICA_SOURCE:ICA_KEYS_HELP_PANEL.IFDL"
+	End Copy
+
+/* KEY PANEL */
+        Panel ICA_PRQ711_KEY_PANEL
+            Viewport ICA_PRQ711_KEY_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Literal Rectangle
+                Line 1	Column 1
+                Line 6	Column 80
+            End Literal                
+
+
+            Literal Text
+                Line 2
+                Column 68
+                Value ":  רפסמ גוס"
+                DISPLAY Bold
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 68
+                Value ": רצומ רפסמ"
+                DISPLAY Bold
+            End Literal
+
+            Literal Text
+                Line 4
+                Column 68
+                Value ": ינימ רפסמ"
+                DISPLAY Bold
+            End Literal
+
+            Literal Text
+                Line 5
+                Column 68
+                Value ":ןובשח רפסמ"
+                DISPLAY Bold
+            End Literal
+
+/*#15 */
+            Literal Text
+                Line 2
+                Column 24
+                Value ":    רצומל 'ניא" 
+
+                DISPLAY Bold
+            End Literal
+
+
+            Literal Text
+/*#15           Line 2
+                Column 18
+                Value ":  הריצע תליחת ךיראתמ" */
+                Line 3
+                Column 24
+                Value ":  הריצע תליחתמ" 
+
+                DISPLAY Bold
+            End Literal
+
+            Literal Text
+/*#15           Line 3
+                Column 18
+                Value ":הריצע תליחת ךיראת דע"  */
+                Line 4
+                Column 24
+                Value ":הריצע תליחת דע"  
+
+                DISPLAY Bold
+            End Literal
+
+            Literal Text
+ /*#15          Line 4
+                Column 18
+                Value ":         הריצע סוטטס" */
+
+                Line 5
+                Column 24
+                Value ":   הריצע סוטטס"
+                DISPLAY Bold
+            End Literal
+		
+            Field EXT_ID_NUM_TYPE_CODE
+                Line 02
+                Column 63
+                Output picture 9(04)R
+                Justification RIGHT
+		Highlight Underlined When EXT_ID_NUM_TYPE_CODE = " "
+
+                Entry Response
+                  If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+		     Let EXT_ID_NUM_TYPE_CODE = ICD_PRT_346_EXT_ID_N_TP.EXT_ID_NUM_TYPE_CODE
+		     Let EXT_ID_NUM_TYPE_NOTE = ICD_PRT_346_EXT_ID_N_TP.EXT_ID_NUM_TYPE_NOTE
+		     Let SP$_acw_function_key = " "
+		  ELSE
+                       LET L$_PREV_EXT_ID_NUM_TYPE = EXT_ID_NUM_TYPE_CODE
+		  End If	
+                  Reset ICD_PRT_346_EXT_ID_N_TP
+                  Reset ICD_PRT_346_EXT_ID_N_TP_OPW
+ 		  Let ICD_PRT_346_EXT_ID_N_TP.EXT_ID_CUST_PROD = 
+                                                   V346$_PROD_EXT_ID
+		  Let ICD_PRT_346_EXT_ID_N_TP_OPW.EXT_ID_CUST_PROD_$ = "EQ"
+                End Response
+
+                Exit Response       
+                  IF SP$_ACW_FUNCTION_KEY = "NEXT_ITEM" THEN
+                     IF EXT_ID_NUM_TYPE_CODE <> L$_PREV_EXT_ID_NUM_TYPE THEN
+
+/**efraim**** 12.5.99 **************/
+                        If NOT ( (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM AND
+                             L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM_DINERS)
+                           OR
+                            (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_DINERS AND
+                             L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM)
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+                           OR
+			(EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_EURO_MASTER AND
+                             L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM)
+                           OR
+                            (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM AND
+                        L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM_EURO_MASTER)
+                           OR
+                            (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM AND
+                        L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_PRIVATE_LABEL)
+			   OR
+                      (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_PRIVATE_LABEL AND
+                             L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM_DINERS)
+                           OR
+                      (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_DINERS AND
+                       L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_PRIVATE_LABEL)
+			   OR
+                      (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_EURO_MASTER AND
+                             L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM_DINERS)
+                           OR
+                      (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_DINERS AND
+                       L$_PREV_EXT_ID_NUM_TYPE = V346$MERCHANT_NUM_EURO_MASTER)
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+                                       )
+                        THEN 
+			    Reset PROD_EXT_ID 
+                        END IF
+/**efraim**** 12.5.99 **************/
+
+/*                        Reset PROD_NAME*/
+                        LET L$_PREV_EXT_ID_NUM_TYPE = EXT_ID_NUM_TYPE_CODE
+                     END IF   
+
+                     Include    DEACTIVATE_RESP
+                
+                     LET L$_EXT_ID_FOUND = V$_NO
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$VISA_CREDIT_CARD) Then
+                        Activate   Panel VISA_PANEL
+                        POSITION TO PANEL VISA_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+/**ER***2.11.97***b**/
+                     If (EXT_ID_NUM_TYPE_CODE = V346$DINERS_CARD) Then
+                        Activate   Panel DINERS_PANEL
+                        POSITION TO PANEL DINERS_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$BUDGET_CARD) Then
+                        Activate   Panel BUDGET_PANEL
+                        POSITION TO PANEL BUDGET_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$SUPERZOL_CARD) Then
+                        Activate   Panel SUPERZOL_PANEL
+                        POSITION TO PANEL SUPERZOL_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$ECI_CARD) Then
+                        Activate   Panel ECI_PANEL
+                        POSITION TO PANEL ECI_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+/**ER***2.11.97***e**/
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$DELEK_CARD) Then
+                        Activate    Panel DELEK_PANEL
+                        POSITION TO Panel DELEK_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+/**ER***2.11.97***b**/
+                     If (EXT_ID_NUM_TYPE_CODE = V346$2_CARS_DEAL) Then
+                        Activate    Panel PAZ_PANEL
+                        POSITION TO Panel PAZ_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+/**ER***2.11.97***e**/
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$PRIVATE_DALKAN_CARD) Then
+                        Activate    panel DALKAN_PANEL
+                        Position to Panel DALKAN_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+  
+                     If (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_AMEX) Then
+                        Activate    Panel AMEX_PANEL
+                        Position to Panel AMEX_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$HILTON_CARD) Then
+                        Activate    Panel HILTON_PANEL
+                        position to Panel HILTON_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$RAC_CARD) Then
+                        Activate    Panel RAC_PANEL
+                        position to Panel RAC_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+  
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+                     If (EXT_ID_NUM_TYPE_CODE = V346$EURO_MASTER_CARD) Then
+                        Activate   Panel EURO_MASTER_PANEL
+                        POSITION TO PANEL EURO_MASTER_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+
+/* #18 */
+                     If (EXT_ID_NUM_TYPE_CODE = V346$PRIVATE_LABEL_CREDIT_CARD) Then
+                        Activate   Panel PRIVATE_LABEL_PANEL
+                        POSITION TO PANEL PRIVATE_LABEL_PANEL
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+/* #18 */
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM   Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+                         EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_EURO_MASTER Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+/**sh***29.9.97**diners+private**b**/    
+/* #11:			 EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_PRIVATE_LABEL Or */
+                         EXT_ID_NUM_TYPE_CODE = V346$MERCHANT_NUM_DINERS      Or
+/* #09: */		 EXT_ID_NUM_TYPE_CODE >= V346$PRIVATE_LABEL_MERCHANT_NUM Or
+/* #12: */		 EXT_ID_NUM_TYPE_CODE = V346$CALNET_MERCHANT_DIST_LOAN or
+/* #16 -S */
+			 EXT_ID_NUM_TYPE_CODE  = V346$MERCHANT_NUM_ISRACART Or
+/* #16 -E */
+			 EXT_ID_NUM_TYPE_CODE = V346$CALNET_MERCHANT_DIST_CARD)
+		     Then
+/**sh***29.9.97**diners+private**e**/    
+                        Activate   Panel MERCHANT_PANEL
+                        POSITION TO PANEL MERCHANT_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$HERTZ_CARD) Then
+                        Activate   Panel HERTZ_PANEL
+                        POSITION TO PANEL HERTZ_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL   Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+                        EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_EURO_MASTER  Or
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+/* #10: */		EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_PRIVATE_LABEL Or
+/**sh***29.9.97**diners+private**b**/    
+/* #11:			EXT_ID_NUM_TYPE_CODE = V346$CHAIN_PRIVATE_LABEL  Or */
+/* #12: */		EXT_ID_NUM_TYPE_CODE = V346$CALNET_CHAIN_DIST_LOAN Or
+			EXT_ID_NUM_TYPE_CODE = V346$CALNET_CHAIN_DIST_CARD Or
+/* #16 -S */
+			EXT_ID_NUM_TYPE_CODE  = V346$CHAIN_DEAL_ISRACART Or
+/* #16 -E */
+                        EXT_ID_NUM_TYPE_CODE = V346$CHAIN_DEAL_DINERS)    
+		     Then
+/**sh***29.9.97**diners+private**e**/    
+                        Activate   Panel SIX_LENGTH_PANEL
+                        POSITION TO Panel SIX_LENGTH_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$COMPANY_DEAL) Then
+                        Activate   Panel SIX_LENGTH_PANEL
+                        POSITION TO Panel SIX_LENGTH_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$YAPA_CARD) Then
+                        Activate   Panel SIX_LENGTH_PANEL
+                        POSITION TO Panel SIX_LENGTH_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$TIK_TAG) Then
+                        Activate   Panel SIX_LENGTH_PANEL
+                        POSITION TO Panel SIX_LENGTH_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$CARS_DEAL) Then
+                        Activate   Panel CARS_DEAL_PANEL
+                        POSITION TO Panel CARS_DEAL_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$CLUB_DEAL) Then
+                        Activate   Panel CLUB_PANEL
+                        POSITION TO Panel CLUB_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If (EXT_ID_NUM_TYPE_CODE = V346$BANK_BRANCH_DEAL) Then
+                        Activate   Panel BANK_PANEL
+                        POSITION TO Panel BANK_PANEL 
+                        LET L$_EXT_ID_FOUND = V$_YES
+                     End if
+
+                     If ((EXT_ID_NUM_TYPE_CODE = 0) OR
+                         (L$_EXT_ID_FOUND = V$_NO)) 
+                     Then
+                        Activate   Panel EXT_ID_DEFAULT_PANEL
+                        POSITION TO PANEL EXT_ID_DEFAULT_PANEL
+                     End if
+
+                  END IF
+
+                End Response
+
+                Validation Response
+		    If (EXT_ID_NUM_TYPE_CODE = 0) Then
+ 		        Let EXT_ID_NUM_TYPE_NOTE = " "
+		    Else
+			Let SP$_PEU_RETURN_STATUS = " "
+			Let ICD_PRT_346_EXT_ID_N_TP.EXT_ID_NUM_TYPE_CODE = EXT_ID_NUM_TYPE_CODE
+			Call 'ICA_346_PEU' Using ICA_346_PEW
+
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+				    Let EXT_ID_NUM_TYPE_NOTE = " "
+				    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+	    				Message W_5089 /*"SYSTEM ה תווצל הנפ-ןורכזב הנועט הניא הלבטה"*/
+					Signal 
+					Invalid
+				    Else
+      				        Message W_5034 /*"!אצמנ אל טירפ"*/
+				        SIGNAL
+				        INVALID
+                                    End If
+			ELSE
+                          If ICD_PRT_346_EXT_ID_N_TP.EXT_ID_CUST_PROD <> 
+		          			V346$_PROD_EXT_ID
+                          THEN 
+                             Let ICD_PRT_346_EXT_ID_N_TP.EXT_ID_CUST_PROD = 
+     		          			V346$_PROD_EXT_ID
+                             MESSAGE W_5203
+                             INVALID
+                          ELSE
+/* Return number type description     */
+                             Let EXT_ID_NUM_TYPE_NOTE = 
+                                 ICD_PRT_346_EXT_ID_N_TP.EXT_ID_NUM_TYPE_NOTE  
+                          END IF
+			End If
+		    End If
+                End Response
+
+                Copy
+                    "ICA_SOURCE:ICA_346_FIND_KEY.IFDL"
+                End Copy
+            End Field                        
+
+            Field EXT_ID_NUM_TYPE_NOTE
+                Line 02  
+                Column 47
+                Display Text Path Hebrew
+                Output picture X(15)
+                Protected
+            End Field                        
+
+            Field ACTNG_ACC_NUM
+                Line 4
+                Column 61
+		Justification Right
+		Output picture 9(6)R
+		Highlight
+                    Underlined when ACTNG_ACC_NUM = "  "
+
+                Entry Response
+		    If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+			Let ACTNG_ACC_NUM = 
+			    ICD_TRT_677_ACTG_ACCNT.ACTNG_ACC_NUM
+			Let ACTNG_DESC =
+			    ICD_TRT_677_ACTG_ACCNT.ACTNG_DESC
+			Let SP$_ACW_FUNCTION_KEY = " "
+		    Else
+			If SP$_ACW_FORM_MSG = " "   Then
+			    Message I_5508
+			End If	
+		    End if
+		    Reset ICD_TRT_677_ACTG_ACCNT
+/* tp_lkogan 18/07/00 */ 
+                    Reset ICD_TRT_677_ACTG_ACCNT_OPW
+                    Let ICD_TRT_677_ACTG_ACCNT_OPW.ACTNG_TYPE_$ = "EQ"
+                    Let ICD_TRT_677_ACTG_ACCNT.ACTNG_TYPE   =  2      
+                End Response
+
+                Validation Response
+		    If (ACTNG_ACC_NUM = 0) Then
+			Let ACTNG_DESC = " "
+		    Else
+			Let SP$_PEU_RETURN_STATUS = " "
+			Let ICD_TRT_677_ACTG_ACCNT.ACTNG_ACC_NUM = ACTNG_ACC_NUM 
+			Call 'ICA_677_PEU' Using ICA_677_PEW
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+			    Let ACTNG_DESC = " "
+			    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+				Message W_5089
+				Signal 
+				Invalid
+			    Else
+				Message W_5034
+				SIGNAL
+				INVALID
+			    End If
+			Else
+			    Let ACTNG_DESC = ICD_TRT_677_ACTG_ACCNT.ACTNG_DESC
+			End If			
+                    End If                  
+                End Response
+/**OK 17.04.2000 *b**/
+
+	        Copy 
+                    "ICA_SOURCE:ICA_677_FIND_KEY.IFDL"
+		End Copy    
+
+		PROTECTED WHEN (EXT_ID_NUM_TYPE_CODE <> 0 OR
+				ACC_NUM <> 0)
+            End Field		
+
+            Field ACTNG_DESC
+                Line 4  
+                Column 40
+                DISPLAY TEXT PATH HEBREW
+		Output picture X(20)
+ 		Protected 
+            End Field                        
+	    
+            Field ACC_BANK_NUM
+                Line 5
+                Column 46
+                Entry Response
+			If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+				Let ACC_BANK_NUM = ICD_PRT_327_BANKS.BANK_NUM
+/*				Let BANK_NAME = ICD_PRT_327_BANKS.BANK_NAME*/
+			        Let SP$_acw_function_key = " "
+		    	ELSE
+                    		If SP$_ACW_FORM_MSG = " "   Then
+                        		Message I_5508
+				End If	
+                        End if
+                        Reset ICD_PRT_327_BANKS
+                End Response
+
+                Validation Response
+		    If (ACC_BANK_NUM = 0) Then
+/* 		        Let BANK_NAME = " "*/
+		    Else
+			Let SP$_PEU_RETURN_STATUS = " "
+			Let ICD_PRT_327_BANKS.BANK_NUM = ACC_BANK_NUM
+			Call 'ICA_327_PEU' Using ICA_327_PEW
+
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+/*				    Let BANK_NAME = " "*/
+				    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+	    				Message W_5089 /*"SYSTEM ה תווצל הנפ-ןורכזב הנועט הניא הלבטה"*/
+					Signal 
+					Invalid
+				    Else
+      				        Message W_5034 /*"!אצמנ אל טירפ"*/
+				        SIGNAL
+				        INVALID
+                                    End If
+			ELSE
+/*				Let BANK_NAME = ICD_PRT_327_BANKS.BANK_NAME*/
+                                LET P$_FATHER_BANK_NUM_I = 
+                                       ICD_PRT_327_BANKS.FATHER_BANK_NUM
+			End If
+		    End If
+                 End Response
+
+                 EXIT RESPONSE
+                   IF ACC_BANK_NUM = 0 THEN
+                      RESET ACC_BRANCH_NUM
+			    ACC_TYPE_CODE
+			    ACC_NUM
+/*			    BANK_NAME			
+                            BRANCH_NAME
+                            ACC_TYPE_NAME*/
+                   END IF
+                 END RESPONSE
+
+                 Copy 
+                    "ICA_SOURCE:ICA_327_FIND_KEY.IFDL"
+                 End Copy			
+		
+		 Justification Right
+                 Highlight Underlined When ACC_BANK_NUM = " "
+                 OUTPUT PICTURE 9(2)
+                 PROTECTED WHEN ACTNG_ACC_NUM <> " "
+		 Autoskip
+            End Field                        
+
+	    LITERAL TEXT
+		Line 5
+		Column 48
+		VALUE "-"
+	    END LITERAL
+
+            Field ACC_BRANCH_NUM
+                Line 5
+                Column 49
+                Entry Response
+			If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+				Let ACC_BRANCH_NUM = ICD_PRT_328_BRANCH.BRANCH_NUM
+/*				Let BRANCH_NAME = ICD_PRT_328_BRANCH.BRANCH_NAME*/
+			        Let SP$_acw_function_key = " "
+		    	ELSE
+                    		If SP$_ACW_FORM_MSG = " "   Then
+                        		Message I_5508
+				End If	
+                        End if
+                        Reset ICD_PRT_328_BRANCH
+                        Reset ICD_PRT_328_BRANCH_OPW
+   		        Let   ICD_PRT_328_BRANCH.BANK_NUM = ACC_BANK_NUM
+		        Let   ICD_PRT_328_BRANCH_OPW.BANK_NUM_$ = "EQ"
+                End Response
+
+                Validation Response
+		    If (ACC_BRANCH_NUM = 0) Then
+/* 		        Let BRANCH_NAME = " "*/
+                        If ACC_BANK_NUM <> 0 THEN
+                           MESSAGE W_5563 /*קנב שקוה םא הבוח*/
+                           INVALID
+                        END IF
+		    Else
+			Let SP$_PEU_RETURN_STATUS = " "
+			Let ICD_PRT_328_BRANCH.BRANCH_NUM = ACC_BRANCH_NUM
+                        Let ICD_PRT_328_BRANCH.BANK_NUM   = ACC_BANK_NUM
+			Call 'ICA_328_PEU' Using ICA_328_PEW
+
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+/*				    Let BRANCH_NAME = " "*/
+				    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+	    				Message W_5089 /*"SYSTEM ה תווצל הנפ-ןורכזב הנועט הניא הלבטה"*/
+					Signal 
+					Invalid
+				    Else
+      				        Message W_5034 /*"!אצמנ אל טירפ"*/
+				        SIGNAL
+				        INVALID
+                                    End If
+			ELSE
+/*				Let BRANCH_NAME = ICD_PRT_328_BRANCH.BRANCH_NAME*/
+			End If
+		    End If
+                End Response
+
+                Copy 
+                    "ICA_SOURCE:ICA_328_FIND_KEY.IFDL"
+                End Copy
+
+		Justification Right
+                Highlight
+		   Underlined When ACC_BRANCH_NUM = " "
+                OUTPUT PICTURE 9(3)
+                PROTECTED WHEN ACC_BANK_NUM = 0
+		Autoskip
+            End Field                        
+
+	    LITERAL TEXT
+		Line 5
+		Column 52
+		VALUE "-"
+	    END LITERAL
+
+            Field ACC_TYPE_CODE
+                Line 5
+                Column 53
+                OUTPUT PICTURE 9(4)
+                JUSTIFICATION RIGHT
+		Highlight
+		    Underlined When ACC_TYPE_CODE = " "
+		Protected When
+		    ACC_BANK_NUM = 0
+		Autoskip
+                Entry Response
+			If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+				Let ACC_TYPE_CODE = ICD_PRT_316_ACC_TYPES.ACC_TYPE_CODE
+/*				Let ACC_TYPE_NAME = ICD_PRT_316_ACC_TYPES.ACC_TYPE_NAME*/
+			        Let SP$_acw_function_key = " "
+                        ELSE    
+                           If SP$_ACW_FORM_MSG = " "   Then
+                              Message I_5508
+ 		           End If	
+                        End if
+                        Reset ICD_PRT_316_ACC_TYPES
+                        Reset ICD_PRT_316_ACC_TYPES_OPW
+   		        Let   ICD_PRT_316_ACC_TYPES.ACC_BANK_NUM = ACC_BANK_NUM
+		        Let   ICD_PRT_316_ACC_TYPES_OPW.ACC_BANK_NUM_$ = "EQ"
+                End Response
+
+                Validation Response
+                   IF ACC_BANK_NUM <> 0 Then
+			Let SP$_PEU_RETURN_STATUS = " "
+			Let ICD_PRT_316_ACC_TYPES.ACC_TYPE_CODE = ACC_TYPE_CODE
+		        Let ICD_PRT_316_ACC_TYPES.ACC_BANK_NUM  = ACC_BANK_NUM
+			Call 'ICA_316_PEU' Using ICA_316_PEW
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+/*			    Let ACC_TYPE_NAME = " " */
+			    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+	    			Message W_5089 /*"SYSTEM ה תווצל הנפ-ןורכזב הנועט הניא הלבטה"*/
+				Signal 
+				Invalid
+			    Else
+      			        Message W_5034 /*"!אצמנ אל טירפ"*/
+			        SIGNAL
+			        INVALID
+                            End If
+			Else
+/*			    Let ACC_TYPE_NAME = ICD_PRT_316_ACC_TYPES.ACC_TYPE_NAME*/
+			End If
+		    End If
+                End Response
+
+                 Copy 
+                    "ICA_SOURCE:ICA_316_FIND_KEY.IFDL"
+                 End Copy		    
+            End Field                        
+
+	    LITERAL TEXT
+		Line 5
+		Column 57
+		VALUE "-"
+	    END LITERAL
+
+            Field ACC_NUM
+                Line 5
+                Column 58
+                OUTPUT PICTURE 9(9)
+                JUSTIFICATION RIGHT
+		Highlight
+		    Underlined When ACC_NUM = " "
+ 		Protected When ACC_BANK_NUM = 0
+		Autoskip
+                Validation Response
+		    If acc_num <> 0 Then
+                	/*Let P$_PROD_EXT      = ACC_NUM*/
+                	Let P$_NUMERIC_EXT_ID = ACC_NUM
+			Let P$_CHECK         = "0"  /*תרוקב תרפס  תקידב */
+                        LET P$_KIND_PARAM    = "02" /*ןובשח תקידב */
+                        Let P$_BANK_NUM      = ACC_BANK_NUM
+                        Let P$_BRANCH_NUM    = ACC_BRANCH_NUM
+                 	Let P$_ACC_TYPE_CODE = ACC_TYPE_CODE
+			Let P$_CURRENCY_CODE = ICD_PRT_316_ACC_TYPES.ACC_TYPE_CURRENCY_CODE
+		        CALL "ICA_PRM_CALL_CONTROL_DIGIT" USING
+                              ICA_CALL_CONTROL_DIGIT_WKSP
+                
+       	                If P$_STATUS_CONTROL <> V$_DIGIT_OK Then
+				Message W_5153 /*היוגש תרוקב תרפיס*/
+				Signal %Bell
+                                INVALID
+                        End if         
+                    ELSE
+                        If ACC_BANK_NUM <> 0 THEN
+                           MESSAGE W_5563 /*קנב שקוה םא הבוח*/
+                           INVALID
+                        END IF
+                    End if         
+                End Response
+
+                EXIT RESPONSE	
+                    LET P$_SOURCE_ACC_NUM = ACC_NUM
+                    LET P$_SOURCE_BANK_NUM = ACC_BANK_NUM 
+                    Call 'ICA_DISPLAY_ACC_NUM_PEU' using ICA_DISPLAY_ACC_NUM_PEW
+                    LET P$_ACC_NUM = P$_DISPLAY_ACC_NUM
+                    DISPLAY ICA_PRU119_ACC_NUM_PANEL
+                End Response
+            End Field                        
+
+
+/*#15*/
+            Field P$_CARD_TYPE_DESC
+                Line 2
+                Column 3
+       	        Output Picture X(20)
+                Output "                 B2B"  
+                     When (P$_CARD_TYPE_IND = "B")
+                Output " "
+                     When (P$_CARD_TYPE_IND = " ") 
+                Protected
+            End Field                        
+/*#15*/       
+
+
+            Field DBCR_STOP_START_DATE
+/*#15           Line 2
+                Column 7    */
+                Line 3
+                Column 13
+                Output Picture FOR DATE DD/NN/YYYY
+                OUTPUT "  /  /    " WHEN DBCR_STOP_START_DATE = P$_BASE_DATE
+		Function Response ERASE_DATE
+		    Let DBCR_STOP_START_DATE = P$_BASE_DATE
+		End Response
+                Highlight
+                    Underlined When DBCR_STOP_START_DATE = P$_BASE_DATE
+/*                Require
+                    (DBCR_STOP_START_DATE
+                                                           <> P$_BASE_DATE)
+                    Message W_5016 / *"ךרע שיקהל הבוח"* /
+*/
+            End Field                        
+
+                Field P$_UNTIL_DATE
+/*#15           Line 3
+                Column 7    */
+                Line 4
+                Column 13
+                Output Picture FOR DATE DD/NN/YYYY
+                OUTPUT "  /  /    " WHEN P$_UNTIL_DATE = P$_BASE_DATE
+
+		Function Response ERASE_DATE
+		    Let P$_UNTIL_DATE = P$_BASE_DATE
+		End Response
+
+                Validation Response
+/* #05: */
+		   IF P$_UNTIL_DATE < DBCR_STOP_START_DATE THEN
+		      Message W_5135
+		      /*"-מ- ךיראתמ הווש וא לודג תויהל בייח -דע- ךיראת"*/
+		      Let P$_UNTIL_DATE =  P$_CURRENT_DATE
+                      INVALID
+		   END IF
+                End Response
+
+                Highlight
+                    Underlined When P$_UNTIL_DATE = P$_BASE_DATE
+/*
+                Require
+                    (P$_UNTIL_DATE
+                                                           <> P$_BASE_DATE)
+                    Message W_5016 / *"ךרע שיקהל הבוח"* /
+*/  
+          End Field                        
+
+            Field ACCUM_PROD_STATUS
+/*#15           Line 4
+                Column 16     */
+                Line 5
+                Column 22     
+		Justification Right
+                OUTPUT PICTURE 9R 
+/*                Entry Response
+                    MESSAGE W_5873 * "לטובמ-4 וא רוגס-3 ,ליעפ-2 ,הטילקב-1: שיקהל שי :W_5873" *
+                End Response 
+                SEARCH STATUS_LIST
+                    MESSAGE W_5873 */
+		Highlight
+		    Underlined When ACCUM_PROD_STATUS = " "
+
+                Entry Response
+		    If (SP$_ACW_FUNCTION_KEY = "SELECT") Then
+			Let ACCUM_PROD_STATUS = ICD_SVT_022_COD_TBL.CODE_VALUE
+			Let P$_ACCUM_PR_ST_DESC = ICD_SVT_022_COD_TBL.DESC_FULL
+			Let SP$_ACW_FUNCTION_KEY = " "
+		    ELSE
+                    	If SP$_ACW_FORM_MSG = " "   Then
+			    Message I_5508
+			End If	
+		    End If	
+		    Reset ICD_SVT_022_COD_TBL
+                    Let P$_LOV_CODE_TBL_NUM = 1128
+		    Let ICD_SVT_022_COD_TBL.CODE_VALUE = ACCUM_PROD_STATUS
+                End Response
+
+                Validation Response
+		    If (ACCUM_PROD_STATUS = 0) Then 
+			Let P$_ACCUM_PR_ST_DESC = " "
+		    Else 
+			Let P$_LOV_CODE_TBL_NUM = 1128
+			Let SP$_PEU_RETURN_STATUS = "          "
+			Let ICD_SVT_022_COD_TBL.CODE_VALUE = ACCUM_PROD_STATUS
+			Let ICD_SVT_022_COD_TBL.TBL_NUM = P$_LOV_CODE_TBL_NUM 
+			Call 'ICA_022_PEU' Using ICA_022_PEW
+
+			If (SP$_PEU_RETURN_STATUS <> "          ") Then
+			    Let DBCR_ACCUM_STATUS = " "
+			    If SP$_PEU_RETURN_STATUS = "UNLOADED  " Then
+				Message W_5089 /*ןורכזב הניא הלבטה*/
+				Signal %Bell
+				Invalid
+			    Else
+				Message W_5034 /*"הלבטב אצמנ אל ךרע"*/
+				Signal
+				Invalid
+			    End If
+			Else
+			    Let P$_ACCUM_PR_ST_DESC = 
+				ICD_SVT_022_COD_TBL.DESC_FULL
+	    		End If
+		    End If
+                End Response
+
+		Copy 
+		    "ICA_SOURCE:ICA_022_FIND_KEY.IFDL"
+		End Copy
+
+            End Field                        
+
+            Field P$_ACCUM_PR_ST_DESC
+/*#15           Line 4
+                Column 9    */
+                Line 5
+                Column 15    
+                Display Text Path Hebrew
+ 		Protected 
+/*                OUTPUT "הטילקב" WHEN ACCUM_PROD_STATUS = V755$INPUT 
+                OUTPUT "  ליעפ"   WHEN ACCUM_PROD_STATUS = V755$ACTIVE
+                OUTPUT "  רוגס"   WHEN ACCUM_PROD_STATUS = V755$CLOSE
+                OUTPUT " לטובמ"  WHEN ACCUM_PROD_STATUS = V755$CANCEL
+                OUTPUT " היבגב"  WHEN ACCUM_PROD_STATUS = V755$ACTIVE_COLLECT
+                OUTPUT "הנתמהב"  WHEN ACCUM_PROD_STATUS = V755$POSTPONED
+                OUTPUT "      "  WHEN ACCUM_PROD_STATUS = 0
+*/
+            End Field
+
+	End Panel
+
+/* DATA PANEL */
+        Panel ICA_PRQ711_DATA_PANEL
+            Viewport ICA_PRQ711_DATA_VP
+
+            Function Response RIGHT ITEM
+	    	Message W_5396 /*" (ינמי) ישארה ךסמב אצמנ ךניה"*/
+		Let p$_valid_flag = 1
+		Signal 
+		Invalid
+	    End Response
+
+            Function Response LEFT ITEM
+                LET SP$_ACW_FUNCTION_KEY = "LEFT_ITEM"
+                Let P$_CURRENT_NUM_SAVED = P$_CURRENT_NUM 
+                ACTIVATE    PANEL ICA_PRQ711_DATA_LEFT_PANEL
+  	        Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM_SAVED).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_LEFT_PANEL
+		DEACTIVATE  PANEL ICA_PRQ711_DATA_PANEL
+	    End Response
+
+            Literal Text
+                Line 3
+                Column 67
+                Value "        רבוצ"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 63
+                Value "ח/ז"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 54
+                Value "    הביס"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 38
+                Value "    הריצעל םוכס"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 35
+                Value "טמ"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 19
+                Value "          הרתי "
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 12
+                Value " סוטטס"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 3
+/* #13: */
+                Value "היבג קית"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Group ICA_PRQ711_SCROLL_GROUP
+                Vertical
+                    Displays 10
+                    First P$_FIRST_NUM
+                    Scroll By Page
+
+            Exit Response
+		If (SP$_ACW_FUNCTION_KEY = "NEXT_SCREEN") Then
+		    Message W_5029 /*"ןתמה אנא - עוצבב תוליעפה"*/
+		    Signal
+		End If
+
+		If (SP$_ACW_FUNCTION_KEY = "PREV_SCREEN") Then
+		    If (ACTION_KIND <> 1 And
+		        ACTION_KIND <> 2 And
+		        ACTION_KIND <> 8 And
+		        ACTION_KIND <> 9) 
+		    Then
+			Message W_5029 /*"ןתמה אנא - עוצבב תוליעפה"*/
+			Signal
+		    End If
+		End If
+	    End Response
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_DATA_RESP.IFDL"
+	    End Copy
+
+            Function Response LAST_ITEM
+		Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_NUM_OF_LINES).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_PANEL
+
+		Let P$_PAGE_NUMBER = P$_NUM_OF_SCREENS + P$_FIRST_PAGE_IN_GROUP
+	    End Response
+
+            Function Response FIRST_ITEM
+		Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_FIRST_NUM).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_PANEL
+	    End Response
+
+	    Apply 
+		Field Default of
+		    Exit Response
+			Message  " "
+		    End Response
+                    Active Highlight Reverse
+		End Default
+
+		Icon CURSOR_PLACE
+		 Entry Response
+		  Let ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM).CURRENT_LINE = "X"
+		 End Response
+
+		 Exit Response
+		  Let ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM).CURRENT_LINE = " "
+	           Message  " "
+		 End Response
+
+		 Highlight Reverse 
+		    When ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+	         Not Protected
+		 Literal Text
+		    Line 4 Column 79
+		    Value " "
+		 End Literal
+		End Icon
+
+                Field ACCUM_INTR_ID
+                    Line 4
+                    Column 72
+                    Output Picture 9(6)R9
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACCUM_INTR_ID
+                            = " ")
+                    Protected
+                End Field
+
+/*		Icon DUMMY_1
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 71 
+			Value " "
+		    End Literal
+		End Icon 
+*/
+                Field ACCUM_NAME
+                    Line 4
+                    Column 66
+                    Output Picture X(6)
+                    DISPLAY TEXT PATH HEBREW
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACCUM_NAME
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_2
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 65
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field DEB_CRD_ACCUM
+                    Line 4
+                    Column 64
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).DEB_CRD_ACCUM
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_3
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 62
+			Value "  "
+		    End Literal
+		End Icon 
+
+                Field P$_STOP_REASON_DESC
+                    Line 4
+                    Column 54
+                    Output Picture X(8)
+                    Display Text Path Hebrew
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).P$_STOP_REASON_DESC
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_4
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 53
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field DBCR_STOP_SUM
+                    Line 4
+                    Column 38
+
+		    /* #14: */
+                    Output Picture 9(11)R9.99 scale -2
+
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).DBCR_STOP_SUM
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_6
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 37
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field CURRENCY_MARK
+                    Line 4
+                    Column 35
+                    Display Text Path Hebrew
+                    Output Picture XX
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENCY_MARK
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_7
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 34
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field DBCR_STOP_BALANCE
+                    Line 4
+                    Column 19
+/* #14: */
+/*                    Output Picture 9(8)R9.99 */
+                    Output Picture 9(11)R9.99 scale -2
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).DBCR_STOP_BALANCE
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_8
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 18
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field P$_ACCUM_STATUS_DESC
+                    Line 4
+                    Column 12
+		    DISPLAY TEXT PATH HEBREW
+                    Output Picture X(6)
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).P$_ACCUM_STATUS_DESC
+                            = " ")
+/*                    OUTPUT "הטילקב"  WHEN 
+                        ICA_PRQ711_SCROLL_GROUP(**).DBCR_ACCUM_STATUS = V755$INPUT 
+                    OUTPUT "  ליעפ" WHEN 
+                        ICA_PRQ711_SCROLL_GROUP(**).DBCR_ACCUM_STATUS = V755$ACTIVE
+                    OUTPUT "  רוגס"  WHEN 
+                        ICA_PRQ711_SCROLL_GROUP(**).DBCR_ACCUM_STATUS = V755$CLOSE
+                    OUTPUT " לטובמ" WHEN 
+                        ICA_PRQ711_SCROLL_GROUP(**).DBCR_ACCUM_STATUS = V755$CANCEL
+*/
+                    Protected
+                End Field
+
+		Icon DUMMY_9
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 11
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field CASE_ID
+                    Line  4
+                    Column 2
+                    Output Picture 9(9)
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CASE_ID
+                            = " ")
+                    Protected
+                End Field
+            End Group
+
+	    Field P$_NEXT_PAGE_FIELD
+		Line 14
+		Column 3
+		Output "..ךשמה" When (P$_NEXT_GROUP_IND = V$_NEXT_PAGE) Or
+		    ((P$_CURRENT_NUM <= P$_NUM_OF_WHOLE_SCREEN_LINES) And 
+		    (P$_CURRENT_NUM <= 90)) 
+		Output "  !ףוס" When (P$_NEXT_GROUP_IND = V$_NO_NEXT_PAGE) And
+		    ((P$_CURRENT_NUM >= P$_NUM_OF_WHOLE_SCREEN_LINES) Or
+		    ((P$_CURRENT_NUM <= P$_NUM_OF_WHOLE_SCREEN_LINES) And 
+		    (P$_CURRENT_NUM >= 90))) 
+		Display Bold
+		Protected
+	    End Field
+
+	    Field P$_PAGE_NUMBER
+		Line 14
+		Column 73
+		Output Picture 9(3)R
+		Output "   " When P$_PAGE_NUMBER = 0
+		Display Bold
+		Protected
+	    End Field
+
+            Literal Rectangle
+                Line 1	Column 1
+                Line 14	Column 80
+            End Literal                
+
+            Literal Text
+                Line 14
+                Column 39
+                Value "<<<"
+                Display
+                    Bold
+            End Literal
+
+            Literal Text
+                Line 14
+                Column 76
+                Value " ףד"
+                Display
+                    Text Path Hebrew
+                    Bold
+            End Literal
+
+        End Panel
+
+        Panel ICA_PRQ711_DATA_LEFT_PANEL
+            Viewport ICA_PRQ711_DATA_VP
+
+            Function Response LEFT ITEM
+	    	Message W_5397 /*" (ילאמש) ינשמה ךסמב אצמנ ךניה"*/
+		Let p$_valid_flag = 1
+		Signal 
+		Invalid
+	    End Response
+
+            Function Response RIGHT ITEM
+               Let SP$_ACW_FUNCTION_KEY = "RIGHT_ITEM"
+               Let P$_CURRENT_NUM_SAVED = P$_CURRENT_NUM 
+               Activate Panel ICA_PRQ711_DATA_PANEL
+  	       Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM_SAVED).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_PANEL
+               Deactivate Panel ICA_PRQ711_DATA_LEFT_PANEL
+	    End Response
+
+/*	    #06: */
+
+            Literal Text
+                Line 2
+                Column 32
+                Value "/שיגנ"
+                Display
+                    Text Path Hebrew
+                    Bold 
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 62
+                Value "             רבוצ"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 45
+                Value "       תשקבמ 'בק"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 38
+                Value "תופידע"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 32
+                Value " םוסח"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 15
+                Value "          ן-ח סמ"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+
+            Literal Text
+                Line 3
+                Column 3
+                Value " זזוקש םוכס"
+                DISPLAY 
+		    Bold Underlined
+            End Literal
+ 	    
+	    Literal Rectangle
+                Line 1	Column 1
+                Line 14 Column 80
+            End Literal
+
+            Group ICA_PRQ711_SCROLL_GROUP
+                Vertical
+                    Displays 10
+                    First P$_FIRST_NUM
+                    Scroll By Page
+
+            Exit Response
+		If (SP$_ACW_FUNCTION_KEY = "NEXT_SCREEN") Then
+		    Message W_5029 /*"ןתמה אנא - עוצבב תוליעפה"*/
+		    Signal
+		End If
+		
+		If (SP$_ACW_FUNCTION_KEY = "PREV_SCREEN") Then
+		    If (ACTION_KIND <> 1 And
+		        ACTION_KIND <> 2 And
+		        ACTION_KIND <> 8 And
+		        ACTION_KIND <> 9) 
+		    Then		    
+			Message W_5029 /*"ןתמה אנא - עוצבב תוליעפה"*/
+			Signal
+		    End If
+		End If
+	    End Response
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_DATA_RESP.IFDL"
+	    End Copy
+
+            Function Response LAST_ITEM
+		Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_NUM_OF_LINES).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_LEFT_PANEL
+
+		Let P$_PAGE_NUMBER = P$_NUM_OF_SCREENS + P$_FIRST_PAGE_IN_GROUP
+	    End Response
+
+            Function Response FIRST_ITEM
+		Position To Icon 
+		    ICA_PRQ711_SCROLL_GROUP(P$_FIRST_NUM).CURSOR_PLACE
+		    On ICA_PRQ711_DATA_LEFT_PANEL
+	    End Response
+
+	    Apply 
+		Field Default of
+		    Exit Response
+			Message  " "
+		    End Response
+                    Active Highlight Reverse
+		End Default
+
+		Icon CURSOR_PLACE
+	           Entry Response
+        		 Let ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM).CURRENT_LINE = "X"
+		   End Response
+
+		   Exit Response
+		        Let ICA_PRQ711_SCROLL_GROUP(P$_CURRENT_NUM).CURRENT_LINE = " "
+	                Message  " "
+		   End Response
+
+		   Highlight Reverse 
+		       When ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+	           Not Protected
+		   Literal Text
+		      Line 4 Column 79
+		      Value " "
+ 		   End Literal
+		End Icon
+
+		Field ACCUM_INTR_ID
+                    Line 4
+                    Column 72
+                    Output Picture 9(6)R9
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACCUM_INTR_ID
+                            = " ")
+                    Protected
+                End Field
+/*
+		Icon DUMMY_1
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 72
+			Value " "
+		    End Literal
+		End Icon 
+*/
+                Field ACCUM_NAME
+                    Line 4
+                    Column 62
+                    Output Picture X(10)
+                    DISPLAY TEXT PATH HEBREW
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACCUM_NAME
+                            = " ")
+                    Protected
+                End Field
+		
+		Icon DUMMY_2
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 61
+			Value " "
+		    End Literal
+		End Icon 
+
+                Field CRD_STOP_GROUP_ID
+                    Line 4
+                    Column 57
+                    Output Picture 9(4)
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CRD_STOP_GROUP_ID
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_3
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 56
+			Value " "
+		    End Literal
+		End Icon 
+
+		Field USER_GRP_DESC
+                    Line 4
+                    Column 45
+                    Output Picture X(11)
+                    Display
+                        Text Path Hebrew
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).USER_GRP_DESC
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_4
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 44
+			Value " "
+		    End Literal
+		End Icon 
+
+		Field HANDLING_PRIORITY_CODE
+                    Line 4
+                    Column 42
+                    Output Picture 9(2)
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).HANDLING_PRIORITY_CODE
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_5
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 37
+			Value "     "
+		    End Literal
+		End Icon 
+
+		Field DEDUCTION_OPTION
+                    Line 4
+                    Column 35
+                    Output Picture 9(2)
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).DEDUCTION_OPTION
+                            = " ")
+                    Protected
+                End Field
+
+		Icon DUMMY_6
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 31
+			Value "    "
+		    End Literal
+		End Icon 
+
+		Field ACC_NUM
+		    Line 4
+		    Column 22
+		    OUTPUT PICTURE 9(9)R
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACC_NUM
+                            = " ")
+                    Protected
+		End Field
+
+		LITERAL TEXT
+		    Line 4
+		    Column 21
+		    VALUE "-"
+		END LITERAL		 
+
+		Field ACC_BRANCH_NUM
+		    Line 4
+		    Column 18
+		    OUTPUT PICTURE 9(3)R
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACC_BRANCH_NUM
+                            = " ")
+                    Protected
+		End Field
+
+		LITERAL TEXT
+		    Line 4
+		    Column 17
+		    VALUE "-"
+		END LITERAL		 
+
+		Field ACC_BANK_NUM
+		    Line 4
+		    Column 15
+		    OUTPUT PICTURE 99R
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).ACC_BANK_NUM
+                            = " ")
+                    Protected
+		End Field
+
+		Icon DUMMY_7
+		    Highlight Reverse When 
+		     ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X"
+		    Protected
+		    Literal Text
+			Line 4 Column 14
+			Value " "
+		    End Literal
+		End Icon 
+
+		Field DEDUCTION_AMOUNT
+		    Line 4
+		    Column 2
+		    OUTPUT PICTURE 99999999R9.99 scale -2
+                    Highlight
+                            Reverse
+                        When (ICA_PRQ711_SCROLL_GROUP(**).CURRENT_LINE = "X")
+                    Output " "
+                        When (ICA_PRQ711_SCROLL_GROUP(**).DEDUCTION_AMOUNT
+                            = " ")
+                    Protected
+		End Field
+	
+	    End Group
+
+	    Field P$_NEXT_PAGE_FIELD
+		Line 14
+		Column 3
+		Output "..ךשמה" When (P$_NEXT_GROUP_IND = V$_NEXT_PAGE) Or
+		    ((P$_CURRENT_NUM <= P$_NUM_OF_WHOLE_SCREEN_LINES) And 
+		    (P$_CURRENT_NUM <= 90)) 
+		Output "  !ףוס" When (P$_NEXT_GROUP_IND = V$_NO_NEXT_PAGE) And
+		    ((P$_CURRENT_NUM >= P$_NUM_OF_WHOLE_SCREEN_LINES) Or
+		    ((P$_CURRENT_NUM <= P$_NUM_OF_WHOLE_SCREEN_LINES) And 
+		    (P$_CURRENT_NUM >= 90))) 
+		Display Bold
+		Protected
+	    End Field
+
+	    Field P$_PAGE_NUMBER
+		Line 14
+		Column 73
+		Output Picture 9(3)R
+		Output "   " When P$_PAGE_NUMBER = 0
+		Display Bold
+		Protected
+	    End Field
+
+            Literal Text
+                Line 14
+                Column 39
+                Value ">>>"
+                Display
+                    Bold
+            End Literal
+
+            Literal Text
+                Line 14
+                Column 76
+                Value " ףד"
+                Display
+                    Text Path Hebrew
+                    Bold
+            End Literal
+
+        End Panel
+    
+/**************************/
+        Panel EXT_ID_DEFAULT_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+         
+	    Exit Response
+		Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+		      ICA_PRF_PROD_EXT_ID_JUST_PEW
+		Display EXT_ID_DEFAULT_PANEL		
+	    End Response
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 2
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(20)
+                OUTPUT " " WHEN PROD_EXT_ID = " "  
+                OUTPUT " " WHEN PROD_EXT_ID = V$_PROD_ZERO  
+                JUSTIFICATION RIGHT
+                PROTECTED WHEN ACC_BANK_NUM <> 0 
+/*                               DBCR_STOP_APPL_CODE <> " "*/
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+            End Field
+
+            
+        End Panel
+
+/**************************/
+        Panel VISA_PANEL
+            Viewport EXT_ID_VP
+
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field VISA_PART1 ON VISA_PANEL
+                ELSE
+                  Let VISA_PART1 = 4580
+                  Position Immediate to field VISA_PART2 ON VISA_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field VISA_PART1
+                Line 1
+                Column 3
+		Highlight Underlined When VISA_PART1 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 7
+                VALUE "-"
+            END LITERAL
+                 
+            Field VISA_PART2
+                Line 1
+                Column 8
+		Highlight Underlined When VISA_PART2 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 12
+                VALUE "-"
+            END LITERAL
+
+            Field VISA_PART3
+                Line 1
+                Column 13
+		Highlight Underlined When VISA_PART3 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 17
+                VALUE "-"
+            END LITERAL
+
+            Field VISA_PART4
+                Line 1
+                Column 18
+		Highlight Underlined When VISA_PART4 = " "
+                Output Picture 9(4)
+             End Field
+
+            
+         
+        End Panel
+
+/**ER***2.11.97***b**/
+/**************************/
+        Panel ECI_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                If SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate To Field P$_ECI_PART1 On ECI_PANEL
+		Else
+		  Let P$_ECI_PART1 = 5555
+		  Position Immediate To Field P$_ECI_PART2 On ECI_PANEL
+                End If
+            End Response
+
+	    Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+	    End Response
+
+            Field P$_ECI_PART1
+                Line 1
+                Column 12
+		Highlight Underlined When P$_ECI_PART1 = " "
+                Output Picture 9(4)
+                Autoskip
+            End Field
+
+            Literal Text
+                Line 1
+                Column 16
+                Value "-"
+            End Literal
+
+            Field P$_ECI_PART2
+                Line 1
+                Column 17
+		Highlight Underlined When P$_ECI_PART2 = " "
+                Output Picture 9(5)
+           End Field
+
+        End Panel
+
+/**************************/
+
+        Panel BUDGET_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                If SP$_ACW_FUNCTION_KEY = "PREV_ITEM" Then
+                  Position Immediate To Field P$_BUDGET_PART1 On BUDGET_PANEL
+		Else
+		  Let P$_BUDGET_PART1 = 306040
+		  Let P$_BUDGET_PART2 = 5100
+		  Position Immediate To Field P$_BUDGET_PART3 On BUDGET_PANEL
+                End If
+            End Response
+
+	    Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+	    End Response
+
+            Field P$_BUDGET_PART1
+                Line 1
+                Column 3
+		Highlight Underlined When P$_BUDGET_PART1 = " "
+                Output Picture 9(6)
+                Autoskip
+            End Field
+
+            Literal Text
+                Line 1
+                Column 9
+                Value "-"
+            End Literal
+
+            Field P$_BUDGET_PART2
+                Line 1
+                Column 10
+		Highlight Underlined When P$_BUDGET_PART2 = " "
+                Output Picture 9(4)
+                Autoskip
+              End Field
+
+            Literal Text
+                Line 1
+                Column 14
+                Value "-"
+            End Literal
+
+            Field P$_BUDGET_PART3
+                Line 1
+                Column 15
+		Highlight Underlined When P$_BUDGET_PART3 = " "
+                Output Picture 9(7)
+              End Field
+
+         End Panel
+
+/**************************/
+
+        Panel DINERS_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                If SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate To Field P$_DINERS_PART1 On DINERS_PANEL
+		Else
+		  Let P$_DINERS_PART1 = 36
+		  Position Immediate To Field P$_DINERS_PART2 On DINERS_PANEL
+                End If
+            End Response
+
+	    Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+ 	    End Response
+
+            Field P$_DINERS_PART1
+                Line 1
+                Column 6
+		Highlight Underlined When P$_DINERS_PART1 = " "
+                Output Picture 9(2)
+                Autoskip
+            End Field
+
+            Field P$_DINERS_PART2
+                Line 1
+                Column 8
+		Highlight Underlined When P$_DINERS_PART2 = " "
+                Output Picture 9(2)
+                Autoskip
+              End Field
+
+            Literal Text
+                Line 1
+                Column 10
+                Value "-"
+            End Literal
+
+            Field P$_DINERS_PART3
+                Line 1
+                Column 11
+		Highlight Underlined When P$_DINERS_PART3 = " "
+                Output Picture 9(6)
+		Autoskip
+             End Field
+
+            Literal Text
+                Line 1
+                Column 17
+                Value "-"
+            End Literal
+
+            Field P$_DINERS_PART4
+                Line 1
+                Column 18
+		Highlight Underlined When P$_DINERS_PART4 = " "
+                Output Picture 9(4)
+             End Field
+
+        End Panel
+
+/**************************/
+
+        Panel SUPERZOL_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                If SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate To Field P$_SUPERZOL_PART1 On SUPERZOL_PANEL
+		Else
+		  Let P$_SUPERZOL_PART1 = 6211111
+		  Let P$_SUPERZOL_PART2 = 12
+		  Position Immediate To Field P$_SUPERZOL_PART3 On SUPERZOL_PANEL
+                End If
+            End Response
+
+	    Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+	    End Response
+
+            Field P$_SUPERZOL_PART1
+                Line 1
+                Column 7
+		Highlight Underlined When P$_SUPERZOL_PART1 = " "
+                Output Picture 9(7)
+                Autoskip
+            End Field
+
+            Literal Text
+                Line 1
+                Column 14
+                Value "-"
+            End Literal
+
+            Field P$_SUPERZOL_PART2
+                Line 1
+                Column 15
+		Highlight Underlined When P$_SUPERZOL_PART2 = " "
+                Output Picture 9(2)
+                Autoskip
+              End Field
+
+            Field P$_SUPERZOL_PART3
+                Line 1
+                Column 17
+		Highlight Underlined When P$_SUPERZOL_PART3 = " "
+                Output Picture 9(5)
+             End Field
+
+        End Panel
+/**************************/
+/**ER***2.11.97***e**/
+
+/**************************/
+        Panel DELEK_PANEL
+            Viewport EXT_ID_VP
+
+            
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field P$_DELEK_PART1 ON DELEK_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                 Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                       ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field P$_DELEK_PART1
+                Line 1
+                Column 1
+		Highlight Underlined When P$_DELEK_PART1 = " "
+                Output Picture 9
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 2
+                VALUE "-"
+            END LITERAL
+                 
+            Field P$_DELEK_PART2
+                Line 1
+                Column 3
+		Highlight Underlined When P$_DELEK_PART2 = " "
+                Output Picture 9(3)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 6
+                VALUE "-"
+            END LITERAL
+
+            Field P$_DELEK_PART3
+                Line 1
+                Column 7
+		Highlight Underlined When P$_DELEK_PART3 = " "
+                Output Picture 9
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 8
+                VALUE "-"
+            END LITERAL
+
+            Field P$_DELEK_PART4
+                Line 1
+                Column 9
+		Highlight Underlined When P$_DELEK_PART4 = " "
+                Output Picture 9(8)
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 17
+                VALUE "-"
+            END LITERAL
+
+            Field P$_DELEK_PART5
+                Line 1
+                Column 18
+		Highlight Underlined When P$_DELEK_PART5 = " "
+                Output Picture 9(2)
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 20
+                VALUE "-"
+            END LITERAL
+
+            Field P$_DELEK_PART6
+                Line 1
+                Column 21
+		Highlight Underlined When P$_DELEK_PART6 = " "
+                Output Picture 9
+             End Field
+
+         
+        End Panel
+
+/**ER***2.11.97***b**/
+/**************************/
+        Panel PAZ_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                If SP$_ACW_FUNCTION_KEY = "PREV_ITEM" Then 
+                  Position Immediate To Field P$_PAZ_PART1 On PAZ_PANEL
+		Else
+		  Let P$_PAZ_PART1 = 77
+		  Position Immediate To Field P$_PAZ_PART2 On PAZ_PANEL
+                End If
+            End Response
+
+	    Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+	    End Response
+
+            Field P$_PAZ_PART1
+                Line 1
+                Column 2
+		Highlight Underlined When P$_PAZ_PART1 = " "
+                Output Picture 9(2)
+                Autoskip
+            End Field
+
+            Literal Text
+                Line 1
+                Column 4
+                Value "-"
+            End Literal
+
+            Field P$_PAZ_PART2
+                Line 1
+                Column 5
+		Highlight Underlined When P$_PAZ_PART2 = " "
+                Output Picture 9(3)
+                Autoskip
+              End Field
+
+            Literal Text
+                Line 1
+                Column 8
+                Value "-"
+            End Literal
+
+            Field P$_PAZ_PART3
+                Line 1
+                Column 9
+		Highlight Underlined When P$_PAZ_PART3 = " "
+                Output Picture 9(5)
+                Autoskip
+             End Field
+
+            Literal Text
+                Line 1
+                Column 14
+                Value "-"
+            End Literal
+
+            Field P$_PAZ_PART4
+                Line 1
+                Column 15
+		Highlight Underlined When P$_PAZ_PART4 = " "
+                Output Picture 9(4)
+                Autoskip
+             End Field
+
+            Literal Text
+                Line 1
+                Column 19
+                Value "-"
+            End Literal
+
+            Field P$_PAZ_PART5
+                Line 1
+                Column 20
+		Highlight Underlined When P$_PAZ_PART5 = " "
+                Output Picture 9(2)
+             End Field
+
+        End Panel
+/**ER***2.11.97***e**/
+
+/**************************/
+        Panel DALKAN_PANEL
+            Viewport EXT_ID_VP
+
+            
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field P$_DALKAN_PART1 ON DALKAN_PANEL
+                ELSE
+                  Let P$_DALKAN_PART1 = 30900003
+                  Position Immediate to field P$_DALKAN_PART2 ON DALKAN_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field P$_DALKAN_PART1
+                Line 1
+                Column 5
+		Highlight Underlined When P$_DALKAN_PART1 = " "
+                Output Picture 9(8)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 13
+                VALUE "-"
+            END LITERAL
+                 
+            Field P$_DALKAN_PART2
+                Line 1
+                Column 14
+		Highlight Underlined When P$_DALKAN_PART2 = " "
+                Output Picture 9(8)
+             End Field
+
+         
+        End Panel
+
+/**************************/
+        Panel AMEX_PANEL
+            Viewport EXT_ID_VP
+
+            
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field P$_AMEX_PART1 ON AMEX_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field P$_AMEX_PART1
+                Line 1
+                Column 10
+		Highlight Underlined When P$_AMEX_PART1 = " "
+                Output Picture 9(3)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 13
+                VALUE "-"
+            END LITERAL
+                 
+
+            Field P$_AMEX_PART2
+                Line 1
+                Column 14
+		Highlight Underlined When P$_AMEX_PART2 = " "
+                Output Picture 9(3)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 17
+                VALUE "-"
+            END LITERAL
+
+            Field P$_AMEX_PART3
+                Line 1
+                Column 18
+		Highlight Underlined When P$_AMEX_PART3 = " "
+                Output Picture 9(4)
+             End Field
+
+         
+        End Panel
+
+/**************************/
+        Panel HILTON_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field P$_HILTON_PART1 ON HILTON_PANEL
+                ELSE
+                  Let P$_HILTON_PART1 = 3469001 
+                  Position Immediate to field P$_HILTON_PART2 ON HILTON_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field P$_HILTON_PART1
+                Line 1
+                Column 4
+		Highlight Underlined When P$_HILTON_PART1 = " "
+                Output Picture 9(7)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 11
+                VALUE "-"
+            END LITERAL
+                 
+            Field P$_HILTON_PART2
+                Line 1
+                Column 12
+		Highlight Underlined When P$_HILTON_PART2 = " "
+                Output Picture 9
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 13
+                VALUE "-"
+            END LITERAL
+
+            Field P$_HILTON_PART3
+                Line 1
+                Column 14
+		Highlight Underlined When P$_HILTON_PART3 = " "
+                Output Picture 9(8)
+             End Field
+
+        End Panel
+
+/**************************/
+        Panel RAC_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field P$_RAC_PART1 ON RAC_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field P$_RAC_PART1
+                Line 1
+                Column 11
+		Highlight Underlined When P$_RAC_PART1 = " "
+                Output Picture X
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 12
+                VALUE "-"
+            END LITERAL
+                 
+
+            Field P$_RAC_PART2
+                Line 1
+                Column 13
+		Highlight Underlined When P$_RAC_PART2 = " "
+                Output Picture 9(9)
+             End Field
+
+         
+        End Panel
+
+/**************************/
+        Panel MERCHANT_PANEL
+            Viewport EXT_ID_VP
+
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 14
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(8) 
+                Justification Right
+
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+                Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+                End Response
+
+            End Field
+
+         
+        End Panel
+
+/**************************/
+        Panel HERTZ_PANEL
+            Viewport EXT_ID_VP
+
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 13
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(9)
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+            End Field
+
+        End Panel
+
+/**************************/
+        Panel CARS_DEAL_PANEL
+            Viewport EXT_ID_VP
+
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 15		 /**ER***2.11.97**diners***18->15**/
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(7)	 /**ER***2.11.97**diners***4->7***/
+                Justification Right
+
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+                Exit Response
+                   Call  'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                          ICA_PRF_PROD_EXT_ID_JUST_PEW
+                End Response
+
+            End Field
+
+        End Panel
+
+/**************************/
+        Panel CLUB_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 15
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(7)
+                Justification Right
+
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+                Exit Response
+                   Call  'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                          ICA_PRF_PROD_EXT_ID_JUST_PEW
+                End Response
+
+            End Field
+
+        End Panel
+
+/**************************/
+        Panel BANK_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 17
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(5)
+                Justification Right
+
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+                Exit Response
+                   Call  'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                          ICA_PRF_PROD_EXT_ID_JUST_PEW
+                End Response
+
+            End Field
+
+        End Panel
+/**************************/
+        Panel SIX_LENGTH_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+             Exit Response
+                 Call  'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                        ICA_PRF_PROD_EXT_ID_JUST_PEW
+   	         MESSAGE  " "
+             End Response
+
+            Field PROD_EXT_ID
+                Line 1
+                Column 16
+		Highlight Underlined When PROD_EXT_ID = " "
+                Output Picture 9(6)
+                Justification Right
+                VALIDATION RESPONSE
+                  IF PROD_EXT_ID = "  " AND EXT_ID_NUM_TYPE_CODE <> 0 THEN
+                     INVALID
+                  END IF
+                END RESPONSE
+            End Field
+
+        End Panel
+
+/***[TP_SVESNE]   11-1-2000    euro_master    .b.  ***/
+        Panel EURO_MASTER_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field EURO_MASTER_PART1 ON EURO_MASTER_PANEL
+                ELSE
+/* tp_lkogan 08/05/2001 */
+               /*   Let EURO_MASTER_PART1 = 8888 */
+                  Position Immediate to field EURO_MASTER_PART1 ON EURO_MASTER_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field EURO_MASTER_PART1
+                Line 1
+                Column 3
+		Highlight Underlined When EURO_MASTER_PART1 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 7
+                VALUE "-"
+            END LITERAL
+                 
+            Field EURO_MASTER_PART2
+                Line 1
+                Column 8
+		Highlight Underlined When EURO_MASTER_PART2 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 12
+                VALUE "-"
+            END LITERAL
+
+            Field EURO_MASTER_PART3
+                Line 1
+                Column 13
+		Highlight Underlined When EURO_MASTER_PART3 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 17
+                VALUE "-"
+            END LITERAL
+
+            Field EURO_MASTER_PART4
+                Line 1
+                Column 18
+		Highlight Underlined When EURO_MASTER_PART4 = " "
+                Output Picture 9(4)
+             End Field
+         
+        End Panel
+/***[TP_SVESNE]   11-1-2000    euro_master    .e.  ***/
+
+/* #09 */
+        Panel PRIVATE_LABEL_PANEL
+            Viewport EXT_ID_VP
+
+	    Copy
+		"ICA_SOURCE:ICA_MPQ_KEY_RESP.IFDL"
+	    End Copy
+
+
+            Entry Response
+                IF SP$_ACW_FUNCTION_KEY = "PREV_ITEM" THEN 
+                  Position Immediate to field PRIVATE_LABEL_PART1 
+						ON PRIVATE_LABEL_PANEL
+                ELSE
+/* tp_lkogan 08/05/2001 */
+		    If PRIVATE_LABEL_PART1 = 0 Then
+                        Let PRIVATE_LABEL_PART2 = 0000
+		    End If
+               /*   Let EURO_MASTER_PART1 = 8888 */
+		    Position Immediate to field PRIVATE_LABEL_PART1 
+					    ON PRIVATE_LABEL_PANEL
+                END IF
+            End Response
+
+            Exit Response
+                   Call 'ICA_PRF_PROD_EXT_ID_JUST_PEU' using 
+                         ICA_PRF_PROD_EXT_ID_JUST_PEW
+            End Response
+
+            Field PRIVATE_LABEL_PART1
+                Line 1
+                Column 3
+		Highlight Underlined When PRIVATE_LABEL_PART1 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 7
+                VALUE "-"
+            END LITERAL
+                 
+            Field PRIVATE_LABEL_PART2
+                Line 1
+                Column 8
+		Highlight Underlined When PRIVATE_LABEL_PART2 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+            End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 12
+                VALUE "-"
+            END LITERAL
+
+            Field PRIVATE_LABEL_PART3
+                Line 1
+                Column 13
+		Highlight Underlined When PRIVATE_LABEL_PART3 = " "
+                Output Picture 9(4)
+                AUTOSKIP
+             End Field
+
+            LITERAL TEXT
+                Line 1
+                Column 17
+                VALUE "-"
+            END LITERAL
+
+            Field PRIVATE_LABEL_PART4
+                Line 1
+                Column 18
+		Highlight Underlined When PRIVATE_LABEL_PART4 = " "
+                Output Picture 9(4)
+             End Field
+         
+        End Panel
+/* #09 */
+
+/* 316_ID LIST OF VALUES (LOV) PANEL  
+   =======================================   */
+
+	Copy
+	   "ICA_SOURCE:ICA_316_LOV_PANEL.IFDL"
+	End Copy			
+
+/* 346_ID LIST OF VALUES (LOV) PANEL  */
+	Copy
+	   "ICA_SOURCE:ICA_346_LOV_PANEL.IFDL"
+	End Copy			
+
+/* 327_ID LIST OF VALUES (LOV) PANEL  
+   =======================================   */
+
+	Copy
+	   "ICA_SOURCE:ICA_327_LOV_PANEL.IFDL"
+	End Copy			
+
+
+/* 328_ID LIST OF VALUES (LOV) PANEL  
+   =======================================   */
+
+	Copy
+	   "ICA_SOURCE:ICA_328_LOV_PANEL.IFDL"
+	End Copy			
+
+	Copy
+	   "ICA_SOURCE:ICA_677_LOV_PANEL.IFDL"
+	End Copy			
+
+	Copy
+	   "ICA_SOURCE:ICA_481_LOV_PANEL.IFDL"
+	End Copy			
+    Copy
+	"ICA_SOURCE:ICA_022_LOV_PANEL.IFDL"
+    End Copy
+
+    Copy
+	"ICA_SOURCE:ICA_022_START_PANELS.IFDL"
+    End Copy
+
+	Copy
+	    "ICA_SOURCE:ICA_CASE_FACTOR_PANEL.IFDL"
+	End Copy
+
+    End Layout
+End Form
+
+                                                                                                                                                                                                                                                    
